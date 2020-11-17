@@ -1,0 +1,19 @@
+.card {
+  background-color: #5044aa;
+  width: 352px;
+  height: 190px;
+  border-radius: 5px;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: center;
+  */
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+}
+
+.card__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: white;
+}
