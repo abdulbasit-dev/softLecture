@@ -10,7 +10,7 @@
 function HomePage() {
   return (
     <>
-      <div>
+      <div className="container">
         <div>
           <div className="heroSection">
             <h1>SoftLectures</h1>

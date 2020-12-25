@@ -6,17 +6,22 @@ import Lectures from './pages/Lectures';
 import Subjects from './pages/Subjects';
 import './App.css';
 import Header from './components/Header';
+import Admin from './pages/Admin';
 
 function App() {
   return (
     <Router>
-      <div className="app container">
-        <Header />
-        <h1 class="text-3lg text-red-500 p-12">Hello world</h1>
+      <div className="app">
         <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/subjects" exact component={Subjects} />
-          <Route path="/lectures" exact component={Lectures} />
+          <Route path="/" exact>
+            <Header />
+            <HomePage />
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          {/* <Route path="/subjects" exact component={Subjects} /> */}
+          {/* <Route path="/lectures" exact component={Lectures} /> */}
           <Route component={Error404} />
         </Switch>
       </div>
