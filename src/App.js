@@ -12,6 +12,7 @@ function App() {
     <Router>
       <div className="app container">
         <Header />
+        <h1 class="text-3lg text-red-500 p-12">Hello world</h1>
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/subjects" exact component={Subjects} />

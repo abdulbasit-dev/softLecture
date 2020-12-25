@@ -1,4 +1,5 @@
 import React from 'react';
+import './assets/main.css';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';

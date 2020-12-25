@@ -1,13 +1,12 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Logo from '../images/Logo.png';
 import './Header.css';
-import { Image } from 'antd';
+
 
 function Header() {
   return (
-    <div class="header">
+    <div className="header">
       {/* logo */}
 
       <img
