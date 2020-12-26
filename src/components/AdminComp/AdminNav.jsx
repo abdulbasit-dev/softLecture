@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import { db, auth } from '../../firebase';
 import { Button, FormControl, Input } from '@material-ui/core';
 import { ACTIONS, LectureContext } from '../../LectureConetxt';
+import { Link } from 'react-router-dom';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -39,8 +40,6 @@ function AdminNav() {
   const [openSignIn, setOpenSignIn] = useState(false);
 
   const [state, dispatch] = useContext(LectureContext);
-
-  console.log(state.user?.email);
 
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -81,11 +80,7 @@ function AdminNav() {
     <nav className="bg-gray-800 pt-2 px-6 md:pt-1 pb-1  mt-0 h-auto fixed w-full z-20 top-0">
       <div className="flex flex-wrap items-center justify-between">
         <div className="flex flex-shrink md:w-1/3 justify-center md:justify-start text-white">
-          <h1>
-            <span className="text-xl pl-2">
-              <i className="em em-grinning"></i>
-            </span>
-          </h1>
+          <Link to="/admin">Admin Dahboard</Link>
         </div>
 
         <div className="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">

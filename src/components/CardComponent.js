@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import CardButton from './CardButton';
 
@@ -6,8 +7,9 @@ import './CardComponent.css';
 
 function CardComponent({ text, subject }) {
   return (
-    <div className="card">
-      <h1 className="card__title">{text}</h1>
+    <Link to={`subjects/${text}`}>
+    <div className="card hover:bg-indigo-500 cursor-pointer">
+      <h1 className="card__title">{text} Stage</h1>
       <CardButton text="Lectures" url="#" />
       {/* {subject && (
         <>
@@ -18,6 +20,8 @@ function CardComponent({ text, subject }) {
         </>
       )} */}
     </div>
+
+    </Link>
   );
 }
 

@@ -6,7 +6,7 @@ import './Header.css';
 
 function Header() {
   return (
-    <div className="header">
+    <div className="header px-32 mx-auto mb-16">
       {/* logo */}
 
       <img
