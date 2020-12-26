@@ -9,11 +9,11 @@ body {
   min-width: 100vw;
 }
 
-.container {
+.containe {
   max-width: 100%;
   margin: 0 auto;
 }
-.container::after {
+.containe::after {
   content: '';
   overflow: hidden;
   background-repeat: no-repeat;
@@ -34,28 +34,28 @@ body {
 
 /* // Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-  .container {
+  .containe {
     max-width: 540px;
   }
 }
 
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  .container {
+  .containe {
     max-width: 720px;
   }
 }
 
 /* // Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  .container {
+  .containe {
     max-width: 960px;
   }
 }
 
 /* // Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  .container {
+  .containe {
     max-width: 1200px;
   }
 }

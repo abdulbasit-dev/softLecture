@@ -8,10 +8,10 @@ import './CardComponent.css';
 function CardComponent({ text, subject }) {
   return (
     <Link to={`subjects/${text}`}>
-    <div className="card hover:bg-indigo-500 cursor-pointer">
-      <h1 className="card__title">{text} Stage</h1>
-      <CardButton text="Lectures" url="#" />
-      {/* {subject && (
+      <div className="card hover:bg-indigo-500 cursor-pointer">
+        <h1 className="card__title">{text}</h1>
+        <CardButton text="Lectures" url="#" />
+        {/* {subject && (
         <>
           <button className={`${subject && 'reduceSize'} classBtn `}>
             Lectures
@@ -19,8 +19,7 @@ function CardComponent({ text, subject }) {
           <button>resorses</button>
         </>
       )} */}
-    </div>
-
+      </div>
     </Link>
   );
 }

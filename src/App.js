@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Error404 from './pages/Error404';
 import HomePage from './pages/HomePage';
@@ -6,9 +6,30 @@ import HomePage from './pages/HomePage';
 import Subjects from './pages/Subjects';
 import './App.css';
 import Header from './components/Header';
-import Admin from './pages/Admin';
+// import Admin from './pages/Admin';
+import SignIn from './components/Signin';
+import { auth } from './firebase';
+import { ACTIONS, LectureContext } from './LectureConetxt';
 
 function App() {
+  const [state, dispatch] = useContext(LectureContext);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //mean the user is logged in
+        dispatch({ type: ACTIONS.USER, user: authUser });
+        // setUser(authUser);
+      } else {
+        //the user is logged out
+        // setUser(null);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [state.user, dispatch]);
+
   return (
     <Router>
       <div className="app">
@@ -17,14 +38,16 @@ function App() {
             <Header />
             <HomePage />
           </Route>
-          <Route path="/admin">
-            <Admin />
+          <Route path="/admin/signin" exact>
+            <SignIn />
           </Route>
           <Route path="/subjects/:stage">
+            <Header shadow />
             <Subjects />
           </Route>
-         
-          {/* <Route path="/lectures" exact component={Lectures} /> */}
+          {/* <Route path="/admin">
+            <Admin />
+          </Route> */}
           <Route component={Error404} />
         </Switch>
       </div>

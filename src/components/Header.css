@@ -1,24 +1,9 @@
-.header {
-  display: flex;
-  align-items: center;
-}
-
 .img-fluid {
   max-width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.header__nav {
-  list-style: none;
-  display: flex;
-  margin-left: 3rem;
-  text-decoration: none;
-  z-index: 100;
-}
-.header__nav li {
-  margin: auto 1rem;
-}
 .header__nav li a {
   text-transform: uppercase;
   color: #000;
