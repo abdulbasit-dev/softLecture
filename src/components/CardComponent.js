@@ -7,7 +7,7 @@ import './CardComponent.css';
 
 function CardComponent({ text, subject }) {
   return (
-    <Link to={`subjects/${text}`}>
+    <Link to={`subjects/${text.trim()}`}>
       <div className="card hover:bg-indigo-500 cursor-pointer">
         <h1 className="card__title">{text}</h1>
         <CardButton text="Lectures" url="#" />

@@ -10,6 +10,7 @@ import Header from './components/Header';
 import SignIn from './components/Signin';
 import { auth } from './firebase';
 import { ACTIONS, LectureContext } from './LectureConetxt';
+import Lectures from './components/Lectures';
 
 function App() {
   const [state, dispatch] = useContext(LectureContext);
@@ -40,6 +41,10 @@ function App() {
           </Route>
           <Route path="/admin/signin" exact>
             <SignIn />
+          </Route>
+          <Route path="/subjects/lecture/:id">
+            <Header shadow />
+            <Lectures />
           </Route>
           <Route path="/subjects/:stage">
             <Header shadow />

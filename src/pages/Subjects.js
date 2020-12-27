@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import CardComponent from '../components/CardComponent';
 import firebase from 'firebase';
 import { db } from '../firebase';
@@ -22,8 +22,6 @@ function Subjects() {
         );
       });
   }, []);
-
-  console.log(subjects);
 
   function createSubject(e) {
     e.preventDefault();
@@ -89,13 +87,30 @@ function Subjects() {
           </form>
         </div>
       )}
-      <>
-        <h1>All subject </h1>
 
+      <h1 className="text-3xl font-medium mb-8">{stage[0]} Stage Subjects</h1>
+      <div className="row">
         {subjects &&
           subjects.map((item) => (
-            <div>
-              <h1>{item.subject?.subjectName}</h1>
+            <div className="col-3 mb-8" key={item.id}>
+              <Link
+                to={`/subjects/lecture/${item.subject.subjectName.trim()}-${
+                  item.id
+                }`}
+              >
+                <div className="bg-indigo-600 cursor-pointer hover:bg-indigo-500 rounded-lg p-6">
+                  <h1 className="text-white font-semibold text-2xl">
+                    {item.subject?.subjectName}
+                  </h1>
+                  <p className="text-lg text-gray-400 mt-1">
+                    {item.subject?.teacherName}
+                  </p>
+                  <div className="flex mt-1 text-gray-300">
+                    <span className="mr-4">12 lectures</span>
+                    <span>8 lectures</span>
+                  </div>
+                </div>
+              </Link>
             </div>
           ))}
       </div>

@@ -13,7 +13,7 @@ const datas = [
 function HomePage() {
   return (
     <>
-      <div className="containe px-32 mx-auto">
+      <div className="container containe  px-32 mx-auto">
         <div className="row items-center">
           <div className="col-md-6">
             <div className="heroSection">
@@ -24,7 +24,7 @@ function HomePage() {
               <img src={read} alt="read" className="img-fluid w-5/6" />
             </div>
           </div>
-          <div className="col-md-6    flex justify-between  flex-wrap">
+          <div className="col-md-6 flex justify-between  flex-wrap">
             {datas.map((item) => (
               <CardComponent key={item.stage} text={item.stage} />
             ))}
