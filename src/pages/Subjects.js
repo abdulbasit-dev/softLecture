@@ -115,7 +115,7 @@ function Subjects() {
                 </div>
                 <div className="mt-2">
                   <Link
-                    to={`/subjects/lectures/${item.subject.subjectName.trim()}_${
+                    to={`/subjects/${stage}/lectures/${item.subject.subjectName.trim()}_${
                       item.id
                     }`}
                   >

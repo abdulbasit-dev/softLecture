@@ -6,6 +6,7 @@ import {
   Modal,
 } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import EditIcon from '@material-ui/icons/Edit';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../firebase';
@@ -74,6 +75,9 @@ function Lectures() {
   const [url, setUrl] = useState(null);
   const [lectures, setLectures] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { stage } = useParams();
+
+  console.log(stage);
 
   const classes = useStyles();
 
@@ -100,22 +104,8 @@ function Lectures() {
 
   console.log(file);
 
-  // const [subjects, setSubjects] = useState([]);
-  // useEffect(() => {
-  //   db.collection('stage4')
-  //     .orderBy('timestamp', 'desc')
-  //     .onSnapshot((snapshot) => {
-  //       setSubjects(
-  //         snapshot.docs.map((doc) => ({ id: doc.id, subject: doc.data() })),
-  //       );
-  //     });
-  // }, []);
-
-  // get all subjects
-  // console.log(subjects.map(({ subject }) => subject.subjectName));
-
   useEffect(() => {
-    db.collection('stage4')
+    db.collection(`stage${stage[0]}`)
       .doc(id.split('_')[1])
       .collection('lectures')
       .onSnapshot((snapshot) => {
@@ -146,6 +136,7 @@ function Lectures() {
       //this function fire when the upload fully complete
       async () => {
         const url = await storageRef.getDownloadURL();
+        //this stage come from the email
         db.collection('stage4')
           .doc(id.split('_')[1])
           .collection('lectures')
@@ -210,8 +201,11 @@ function Lectures() {
                       >
                         Download
                       </th>
-                      <th scope="col" className="relative px-6 py-3">
-                        <span className="sr-only">Edit</span>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Edit
                       </th>
                     </tr>
                   </thead>
@@ -245,13 +239,14 @@ function Lectures() {
                             </IconButton>
                           </a>
                         </td>
-                        <td className="px-6 py-0.1 whitespace-nowrap text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
+                        <td className="px-6 py-0.1 whitespace-nowrap text-right text-sm font-medium flex">
+                          <IconButton
+                            aria-label="edit"
+                            color="primary"
+                            className="focus:outline-none focus:border-none "
                           >
-                            Edit
-                          </a>
+                            <EditIcon fontSize="large" />
+                          </IconButton>
                         </td>
                       </tr>
                     ))}

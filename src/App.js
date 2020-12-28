@@ -42,7 +42,7 @@ function App() {
           <Route path="/admin/signin" exact>
             <SignIn />
           </Route>
-          <Route path="/subjects/lectures/:id">
+          <Route path="/subjects/:stage/lectures/:id">
             <Header shadow />
             <Lectures />
           </Route>
