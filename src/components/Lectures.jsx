@@ -66,40 +66,41 @@ function getModalStyle() {
 }
 
 function Lectures() {
-  const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-  const { id } = useParams();
   const [open, setOpen] = useState(false);
-
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
-
+  const [teacherName, setTeacherName] = useState('');
   const [url, setUrl] = useState(null);
+  const [lectures, setLectures] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const types = ['image/jpeg', 'image/png'];
+  const classes = useStyles();
+
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+  const { id } = useParams();
+
+  const types = ['pdf', 'pptx'];
 
   function handleChange(e) {
     let selected = e.target.files[0];
-
-    //only update the state when we have files selcted
-    //check if we have files and valid  types
-    if (selected && types.includes(selected.type)) {
-      setFile(e.target.files[0]);
-      setError(null);
-    } else {
-      setFile(null);
-      setError('Please select an image file (png or jpeg)');
-    }
+    setFile(selected);
+    // let selected = e.target.files[0];
+    // //only update the state when we have files selcted
+    // //check if we have files and valid  types
+    // if (selected && types.includes(selected.type)) {
+    //   setFile(e.target.files[0]);
+    //   setError(null);
+    // } else {
+    //   setFile(null);
+    //   setError('Please select an image file (pdf or ppt)');
+    // }
   }
 
   console.log(file);
 
   // const [subjects, setSubjects] = useState([]);
-
   // useEffect(() => {
   //   db.collection('stage4')
   //     .orderBy('timestamp', 'desc')
@@ -113,11 +114,21 @@ function Lectures() {
   // get all subjects
   // console.log(subjects.map(({ subject }) => subject.subjectName));
 
+  useEffect(() => {
+    db.collection('stage4')
+      .doc(id.split('_')[1])
+      .collection('lectures')
+      .onSnapshot((snapshot) => {
+        setLectures(
+          snapshot.docs.map((doc) => ({ id: doc.id, lecture: doc.data() })),
+        );
+        setLoading(false);
+      });
+  }, [id]);
+
   const upload = (e) => {
     e.preventDefault();
-
     setOpen(false);
-
     //get a reffrece for where the file should save in firebase
     const storageRef = storage.ref(`lecture/${file.name}`);
 
@@ -136,12 +147,13 @@ function Lectures() {
       async () => {
         const url = await storageRef.getDownloadURL();
         db.collection('stage4')
-          .doc(id.split('-')[1])
-          .collection('comments')
+          .doc(id.split('_')[1])
+          .collection('lectures')
           .add({
             url,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            fileName: file.name,
+            teacherName,
+            name: file.name,
           });
         setUrl(url);
         setProgress(0);
@@ -153,106 +165,103 @@ function Lectures() {
   return (
     <div className="container ">
       <h1 className="mb-8">see all lectuare</h1>
+
       <button
         className="bg-blue-400 hover:bg-blue-500 px-4 py-2 font-semibold text-white rounded-lg mb-6"
         onClick={() => setOpen(true)}
       >
-        Submit
+        Add lecture
       </button>
 
-      <CircularProgressWithLabel value={progress} />
+      {progress && <CircularProgressWithLabel value={progress} />}
 
-      <div className="flex flex-col shadow-lg">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Teacher Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Size
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Download
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <img
-                            className="h-10 w-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60"
-                            alt=""
-                          />
-                        </div>
-                        <div className="ml-4">
+      <div className="offset-md-5">
+        {loading && <CircularProgress size={100} />}
+      </div>
+      {lectures && (
+        <div className="flex flex-col shadow-lg">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Size
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Download
+                      </th>
+                      <th scope="col" className="relative px-6 py-3">
+                        <span className="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {lectures.map((item, index) => (
+                      <tr key={item.id}>
+                        <td className="px-6 py-0.1 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            Jane Cooper
+                            {index + 1}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            jane.cooper@example.com
+                        </td>
+                        <td className="px-6 py-0.1 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">
+                            {item.lecture.name}
                           </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        Regional Paradigm Technician
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="pr-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Active
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <IconButton
-                        aria-label="download"
-                        color="primary"
-                        className="focus:outline-none focus:border-none "
-                      >
-                        <GetAppIcon fontSize="large" />
-                      </IconButton>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        </td>
+
+                        <td className="px-6 py-0.1 whitespace-nowrap">
+                          <span className="pr-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            Active
+                          </span>
+                        </td>
+                        <td className="px-6 py-0.1 whitespace-nowrap text-sm text-gray-500">
+                          <a href={item.lecture.url}>
+                            <IconButton
+                              aria-label="download"
+                              color="primary"
+                              className="focus:outline-none focus:border-none "
+                            >
+                              <GetAppIcon fontSize="large" />
+                            </IconButton>
+                          </a>
+                        </td>
+                        <td className="px-6 py-0.1 whitespace-nowrap text-right text-sm font-medium">
+                          <a
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Edit
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* sign in modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -265,22 +274,22 @@ function Lectures() {
             />
           </center>
           <form className="app__signupForm">
-            <FormControl>
+            {/* <FormControl>
               <Input
-                type="emial"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="lecture name"
+                value={lectureName}
+                onChange={(e) => setLectureName(e.target.value)}
               />
             </FormControl>
             <FormControl>
               <Input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                placeholder="teacher name"
+                value={teacherName}
+                onChange={(e) => setTeacherName(e.target.value)}
               />
-            </FormControl>
+            </FormControl> */}
             <input type="file" onChange={handleChange} />
 
             {error && <div className="error">{error}</div>}
@@ -292,7 +301,7 @@ function Lectures() {
               variant="contained"
               onClick={upload}
             >
-              Sign In
+              Upload Lecture
             </Button>
           </form>
         </div>
