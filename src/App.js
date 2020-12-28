@@ -42,9 +42,13 @@ function App() {
           <Route path="/admin/signin" exact>
             <SignIn />
           </Route>
-          <Route path="/subjects/lecture/:id">
+          <Route path="/subjects/lectures/:id">
             <Header shadow />
             <Lectures />
+          </Route>
+          <Route path="/subjects/videos/:id">
+            <Header shadow />
+            <h1>all online videos</h1>
           </Route>
           <Route path="/subjects/:stage">
             <Header shadow />

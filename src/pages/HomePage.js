@@ -4,10 +4,10 @@ import '../bootstrap-grid.css';
 import read from '../images/undraw_studying_s3l7 (1).svg';
 
 const datas = [
-  { stage: '1st Stage' },
-  { stage: '2nd Stage' },
-  { stage: '3rd Stage' },
-  { stage: '4th Stage' },
+  { stage: '1st' },
+  { stage: '2nd' },
+  { stage: '3rd' },
+  { stage: '4th' },
 ];
 
 function HomePage() {
