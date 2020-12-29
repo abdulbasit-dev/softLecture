@@ -1,171 +1,123 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { db, storage } from '../firebase';
 import firebase from 'firebase';
 
-// material-ui
 import {
   Button,
   FormControl,
   IconButton,
   Input,
   Modal,
+  TextField,
 } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { makeStyles } from '@material-ui/core/styles';
+import { db } from '../firebase';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import ExamplePDFViewer from './PdfViewe';
 import { LectureContext } from '../LectureConetxt';
-import CircularProgressWithLabel from './CircularProgressWithLabel';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import { useStyles } from '../assets/styles.js';
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
   return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`,
   };
 }
 
-function Lectures() {
+function Videos() {
   const [state] = useContext(LectureContext);
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [teacherName, setTeacherName] = useState('');
-  const [url, setUrl] = useState(null);
-  const [lectures, setLectures] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [url, setUrl] = useState('');
+  const [name, setName] = useState('');
+  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const { stage } = useParams();
-
-  const classes = useStyles();
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const { id } = useParams();
-
-  const types = ['pdf', 'pptx'];
-
-  function handleChange(e) {
-    let selected = e.target.files[0];
-    setFile(selected);
-    // let selected = e.target.files[0];
-    // //only update the state when we have files selcted
-    // //check if we have files and valid  types
-    // if (selected && types.includes(selected.type)) {
-    //   setFile(e.target.files[0]);
-    //   setError(null);
-    // } else {
-    //   setFile(null);
-    //   setError('Please select an image file (pdf or ppt)');
-    // }
-  }
+  const classes = useStyles();
 
   useEffect(() => {
     db.collection(`stage${stage[0]}`)
       .doc(id.split('_')[1])
-      .collection('lectures')
+      .collection('videos')
+      .orderBy('timestamp')
       .onSnapshot((snapshot) => {
-        setLectures(
-          snapshot.docs.map((doc) => ({ id: doc.id, lecture: doc.data() })),
+        setVideos(
+          snapshot.docs.map((doc) => ({ id: doc.id, video: doc.data() })),
         );
-        // setLoading(false);
+        setLoading(false);
       });
   }, [id, stage]);
 
+  function openUploadModel() {
+    if (stage[0] === state.user.email.substring(5, 6)) {
+      setOpen(true);
+    } else {
+      alert('your are not allowd to upload to this stage');
+    }
+  }
+
   const upload = (e) => {
     e.preventDefault();
-    setOpen(false);
-    //get a reffrece for where the file should save in firebase
-    const storageRef = storage.ref(`lecture/${file.name}`);
+    if (!name) alert('Please fill name field');
+    else if (!url) alert('Please fill url field');
+    else {
+      db.collection(`stage${stage[0]}`)
+        .doc(id.split('_')[1])
+        .collection('videos')
+        .add({
+          url,
+          name,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
 
-    storageRef.put(file).on(
-      'state_changed',
-      (snapshot) => {
-        const percentage = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-        );
-        setProgress(percentage);
-      },
-      (err) => {
-        setError(err);
-      },
-      //this function fire when the upload fully complete
-      async () => {
-        const url = await storageRef.getDownloadURL();
-        //this stage come from the email
-        db.collection(`stage${stage[0]}`)
-          .doc(id.split('_')[1])
-          .collection('lectures')
-          .add({
-            url,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            teacherName,
-            name: file.name,
-          });
-        setUrl(url);
-        setProgress(0);
-        setFile(null);
-      },
-    );
+      setUrl('');
+      setName('');
+      setOpen(false);
+    }
   };
 
-  console.log(lectures);
+  console.log(videos);
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="flex justify-center">
         <div className={`items-center ${loading && 'pt-64'}`}>
-          {loading && <CircularProgress size={60} />}
+          {loading && (
+            <CircularProgress size={60} thickness={4.5} color="secondary" />
+          )}
         </div>
       </div>
 
       {state.user && (
         <>
-          <form className="border-separate">
-            <div className="mb-2">
-              <input type="file" onChange={handleChange} />
-              {error && <div className="text-sm text-red-600 ">{error}</div>}
-              {file && <div className="text-gray-500">{file.name}</div>}
-            </div>
-
-            <button
-              className="bg-blue-400 hover:bg-blue-500 px-4 py-2 font-semibold text-white rounded-lg mb-6"
-              onClick={upload}
-            >
-              Add lecture
-            </button>
-          </form>
-          {progress ? <CircularProgressWithLabel value={progress} /> : null}
+          <button
+            className="bg-blue-400 hover:bg-blue-500 px-4 py-2 font-semibold text-white rounded-lg mb-6"
+            onClick={openUploadModel}
+          >
+            Add Video
+          </button>
         </>
       )}
 
+      {videos?.length === 0 && (
+        <h1 className="text-3xl text-red-400 text-center p-4 mt-3 shadow-lg">
+          Sorry There is No Video Found for {id.split('_')[0]} 😥
+        </h1>
+      )}
+
       <div className="flex flex-col shadow-lg">
-        {lectures && (
+        {videos && (
           <>
             <h1 className="m-3 text-3xl text-blue-600">
-              All {id.split('_')[0]} lectuers{' '}
+              All {id.split('_')[0]} videos{' '}
             </h1>
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -189,8 +141,9 @@ function Lectures() {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Size
+                          View
                         </th>
+
                         <th
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -201,18 +154,18 @@ function Lectures() {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          View
+                          Edit
                         </th>
                         <th
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Edit
+                          Delete
                         </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {lectures.map((item, index) => (
+                      {videos.map((item, index) => (
                         <tr key={item.id}>
                           <td className="px-6 py-0.1 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
@@ -221,28 +174,12 @@ function Lectures() {
                           </td>
                           <td className="px-6 py-0.1 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
-                              {item.lecture.name}
+                              {item.video.name}
                             </div>
                           </td>
 
-                          <td className="px-6 py-0.1 whitespace-nowrap">
-                            <span className="pr-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              Active
-                            </span>
-                          </td>
-                          <td className="px-6 py-0.1 whitespace-nowrap text-sm text-gray-500">
-                            <a href={item.lecture.url}>
-                              <IconButton
-                                aria-label="download"
-                                color="primary"
-                                className="focus:outline-none focus:border-none "
-                              >
-                                <GetAppIcon fontSize="large" />
-                              </IconButton>
-                            </a>
-                          </td>
                           <td className="pr-6 pl-3 py-0.1 whitespace-nowrap text-sm text-gray-500">
-                            <a href={item.lecture.url}>
+                            <a href={item.video.url} target="_blank">
                               <IconButton
                                 aria-label="download"
                                 color="primary"
@@ -252,6 +189,18 @@ function Lectures() {
                               </IconButton>
                             </a>
                           </td>
+                          <td className="px-6 py-0.1 whitespace-nowrap text-sm text-gray-500">
+                            <a href={item.video.url} rel="no" target="_blank">
+                              <IconButton
+                                aria-label="download"
+                                color="primary"
+                                className="focus:outline-none focus:border-none "
+                              >
+                                <GetAppIcon fontSize="large" />
+                              </IconButton>
+                            </a>
+                          </td>
+
                           <td className="px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex">
                             <IconButton
                               aria-label="edit"
@@ -270,14 +219,64 @@ function Lectures() {
             </div>
           </>
         )}
-        {lectures?.length === 0 && (
-          <h1 className="text-3xl text-red-400 text-center p-4">
-            Sorry No lectuer Found for {id.split('_')[0]} 😥
-          </h1>
-        )}
       </div>
+
+      {/* modals  */}
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <div className="my-2">
+            <h2 className="text-2xl">Add lecture video</h2>
+            <small className="text-red-500 text-sm">
+              *Plase fill both name and url field
+            </small>
+          </div>
+          <form className={classes.form} noValidate onSubmit={upload}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="lectureName"
+              label="lecture name"
+              name="lectureName"
+              autoComplete="lectureName"
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="url"
+              label="Enter Url"
+              name="url"
+              autoComplete="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={false}
+              className="mt-3"
+            >
+              Upload
+            </Button>
+          </form>
+        </div>
+      </Modal>
     </div>
   );
 }
 
-export default Lectures;
+export default Videos;

@@ -16,7 +16,7 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center px-32 mx-auto mb-16 ${
+      className={` flex items-center px-32 mx-auto mb-8 ${
         props.shadow && 'shadow-md'
       }`}
     >
@@ -34,16 +34,7 @@ function Header(props) {
               Home
             </NavLink>
           </li>
-          {state.user && (
-            <>
-              <li>
-                <NavLink to="/lectures">Add Lectures</NavLink>
-              </li>
-              <li>
-                <NavLink to="/lectures">Add Video</NavLink>
-              </li>
-            </>
-          )}
+
           <li>
             <NavLink to="/about">About</NavLink>
           </li>

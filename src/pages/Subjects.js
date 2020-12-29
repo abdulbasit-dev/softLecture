@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { LectureContext } from '../LectureConetxt';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+// import DeleteIcon from '@material-ui/icons/Delete';
 
 function Subjects() {
   const [state] = useContext(LectureContext);
@@ -41,6 +42,10 @@ function Subjects() {
       alert('your are not allowd to upload to this stage');
     }
   }
+
+  // function deleteSubject(id) {
+  //   db.collection(`stage${stage[0]}`).doc(id).delete();
+  // }
 
   return (
     <div className="container">
@@ -101,7 +106,24 @@ function Subjects() {
       <div className="row">
         {subjects &&
           subjects.map((item) => (
-            <div className="col-lg-3 col-md-4 col-sm-6 mb-8" key={item.id}>
+            <div
+              className="col-lg-3 col-md-4 col-sm-6 mb-8 relative"
+              key={item.id}
+            >
+              {/* {state.user && (
+                <div
+                  className="absolute top-0 right-0"
+                  onClick={() => deleteSubject(item.id)}
+                >
+                  <IconButton
+                    aria-label="download"
+                    color="secondary"
+                    className="focus:outline-none focus:border-none "
+                  >
+                    <DeleteIcon fontSize="large" />
+                  </IconButton>
+                </div>
+              )} */}
               <div className="bg-indigo-600   rounded-lg p-6">
                 <h1 className="text-white font-semibold text-2xl">
                   {item.subject?.subjectName}
@@ -124,7 +146,7 @@ function Subjects() {
                     </button>
                   </Link>
                   <Link
-                    to={`/subjects/videos/${item.subject.subjectName.trim()}_${
+                    to={`/subjects/${stage}/videos/${item.subject.subjectName.trim()}_${
                       item.id
                     }`}
                   >

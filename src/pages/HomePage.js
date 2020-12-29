@@ -1,5 +1,4 @@
 import CardComponent from '../components/CardComponent';
-import '../bootstrap-grid.css';
 
 import read from '../images/undraw_studying_s3l7 (1).svg';
 

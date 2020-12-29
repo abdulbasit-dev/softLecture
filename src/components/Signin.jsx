@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import { auth } from '../firebase';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -52,14 +53,19 @@ export default function SignIn() {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const signIn = (e) => {
     e.preventDefault();
 
     auth
       .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        setEmail('');
+        setPassword('');
+        return history.goBack();
+      })
       .catch((error) => alert(error.message));
-    //if sussces redicret to home
   };
 
   return (

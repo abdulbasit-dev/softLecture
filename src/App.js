@@ -5,12 +5,14 @@ import HomePage from './pages/HomePage';
 // import Lectures from './pages/Lectures';
 import Subjects from './pages/Subjects';
 import './App.css';
+import './assets/bootstrap-grid.css';
 import Header from './components/Header';
 // import Admin from './pages/Admin';
 import SignIn from './components/Signin';
 import { auth } from './firebase';
 import { ACTIONS, LectureContext } from './LectureConetxt';
 import Lectures from './components/Lectures';
+import Videos from './components/Videos';
 
 function App() {
   const [state, dispatch] = useContext(LectureContext);
@@ -45,6 +47,10 @@ function App() {
           <Route path="/subjects/:stage/lectures/:id">
             <Header shadow />
             <Lectures />
+          </Route>
+          <Route path="/subjects/:stage/videos/:id">
+            <Header shadow />
+            <Videos />
           </Route>
           <Route path="/subjects/videos/:id">
             <Header shadow />
