@@ -40,8 +40,8 @@ function Videos() {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const { id } = useParams();
   const classes = useStyles();
+  const { id } = useParams();
 
   useEffect(() => {
     db.collection(`stage${stage[0]}`)

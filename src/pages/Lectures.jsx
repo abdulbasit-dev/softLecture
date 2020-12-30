@@ -2,50 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../firebase';
 import firebase from 'firebase';
-
-// material-ui
-import {
-  Button,
-  FormControl,
-  IconButton,
-  Input,
-  Modal,
-} from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import ExamplePDFViewer from './PdfViewe';
 import { LectureContext } from '../LectureConetxt';
-import CircularProgressWithLabel from './CircularProgressWithLabel';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 
 function Lectures() {
   const [state] = useContext(LectureContext);
@@ -59,10 +23,6 @@ function Lectures() {
   const [loading, setLoading] = useState(true);
   const { stage } = useParams();
 
-  const classes = useStyles();
-
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
   const { id } = useParams();
 
   const types = ['pdf', 'pptx'];

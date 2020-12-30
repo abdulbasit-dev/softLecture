@@ -1,9 +1,10 @@
 import React from 'react';
-import './assets/main.css';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import LectureProvider from './LectureConetxt';
+import App from './App';
+import './index.css';
+import './assets/main.css';
+import './assets/bootstrap-grid.css';
 
 ReactDOM.render(
   <React.StrictMode>
