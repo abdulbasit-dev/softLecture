@@ -14,8 +14,8 @@ import { LectureContext } from '../LectureConetxt';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { useStyles } from '../assets/styles.js';
+import SubjectCard from '../components/SubjectCard';
 
 function getModalStyle() {
   return {
@@ -28,12 +28,14 @@ function getModalStyle() {
 function Subjects() {
   const [state] = useContext(LectureContext);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [subjectName, setSubjectName] = useState('');
   const [teacherName, setTeacherName] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
+
   const [subjects, setSubjects] = useState([]);
   const { stage } = useParams();
   const [loading, setLoading] = useState(true);
-  const [videoUrl, setVideoUrl] = useState('');
 
   // modal
   const [modalStyle] = React.useState(getModalStyle);
@@ -53,21 +55,27 @@ function Subjects() {
   function createSubject(e) {
     e.preventDefault();
     if (stage[0] === state.user.email.substring(5, 6)) {
-      db.collection('stage4').add({
-        teacherName,
-        subjectName,
-        videoUrl,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-      setSubjectName('');
-      setTeacherName('');
+      if (
+        subjectName.length !== 0 &&
+        teacherName.length !== 0 &&
+        videoUrl.length !== 0
+      ) {
+        db.collection('stage4').add({
+          teacherName,
+          subjectName,
+          videoUrl,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        setSubjectName('');
+        setTeacherName('');
+        setVideoUrl('');
+        setOpenCreateModal(false);
+      } else {
+        alert('please fill all fields');
+      }
     } else {
       alert('your are not allowd to upload to this stage');
     }
-  }
-
-  function deleteSubject(id) {
-    db.collection(`stage${stage[0]}`).doc(id).delete();
   }
 
   return (
@@ -88,7 +96,7 @@ function Subjects() {
             </IconButton>
           )}
         </div>
-        <div className="bg-gray-500 h-1 w-1/4 rounded-lg"></div>
+        <div className="bg-gray-500 h-1 w-1/3 rounded-lg"></div>
       </div>
 
       <div className="row">
@@ -98,58 +106,8 @@ function Subjects() {
       </div>
       <div className="row">
         {subjects &&
-          subjects.map((item) => (
-            <div
-              className="col-lg-3 col-md-4 col-sm-6 mb-8 relative"
-              key={item.id}
-            >
-              {state.user && (
-                <div
-                  className="absolute top-0 right-0"
-                  onClick={() => deleteSubject(item.id)}
-                >
-                  <IconButton
-                    aria-label="download"
-                    color="secondary"
-                    className="focus:outline-none focus:border-none "
-                  >
-                    <DeleteIcon fontSize="large" />
-                  </IconButton>
-                </div>
-              )}
-              <div className="bg-indigo-600   rounded-lg p-6">
-                <h1 className="text-white font-semibold text-2xl">
-                  {item.subject?.subjectName}
-                </h1>
-                <p className="text-lg text-gray-400 mt-1">
-                  {item.subject?.teacherName}
-                </p>
-                <div className="flex mt-1 text-gray-300">
-                  <span className="mr-4">12 lectures</span>
-                </div>
-                <div className="mt-2">
-                  <Link
-                    to={`/subjects/${stage}/lectures/${item.subject.subjectName.trim()}_${
-                      item.id
-                    }`}
-                  >
-                    <button className="text-gray-300 hover:bg-blue-500 hover:text-white px-2 py-1 text-lg border border-gray-300 rounded-lg mr-4">
-                      Lectuers
-                    </button>
-                  </Link>
-                  <Link
-                    to={`/subjects/${stage}/videos/${item.subject.subjectName.trim()}_${
-                      item.id
-                    }`}
-                  >
-                    <button className="text-gray-300 px-2 py-1 hover:bg-blue-500 hover:text-white text-lg border border-gray-300 rounded-lg">
-                      Videos
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+          subjects.map((item) => <SubjectCard key={item.id} item={item} />)}
+
         {/* CreateModal */}
         <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
           <div style={modalStyle} className={classes.paper}>
@@ -184,7 +142,6 @@ function Subjects() {
                 name="teacher name"
                 type="text"
                 autoComplete="teacher name"
-                autoFocus
                 value={teacherName}
                 onChange={(e) => setTeacherName(e.target.value)}
               />
@@ -193,14 +150,13 @@ function Subjects() {
                 margin="normal"
                 required
                 fullWidth
-                id="teacher name"
-                label="Teacher Name"
-                name="teacher name"
+                id="videoUrl"
+                label="Video Folder Url"
+                name="videoUrl"
                 type="text"
-                autoComplete="teacher name"
-                autoFocus
-                value={teacherName}
-                onChange={(e) => setTeacherName(e.target.value)}
+                autoComplete="videoUrl"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
               />
 
               <Button
@@ -216,8 +172,16 @@ function Subjects() {
             </form>
           </div>
         </Modal>
-        {/* edit modal */}
+
         {/* confirm delete */}
+        {/* <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button> */}
       </div>
     </div>
   );
