@@ -2,13 +2,7 @@ import React, { useContext, useState } from 'react';
 import { LectureContext } from '../LectureConetxt';
 import { Link, useParams } from 'react-router-dom';
 
-import {
-  Button,
-  IconButton,
-  Modal,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Button, IconButton, Modal, TextField } from '@material-ui/core';
 import firebase from 'firebase';
 import { db } from '../firebase';
 
@@ -26,6 +20,7 @@ function getModalStyle() {
 
 function SubjectCard({ item }) {
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);
   const [subjectName, setSubjectName] = useState(item.subject.subjectName);
   const [teacherName, setTeacherName] = useState(item.subject.teacherName);
   const [videoUrl, setVideoUrl] = useState(item?.subject.videoUrl);
@@ -56,9 +51,6 @@ function SubjectCard({ item }) {
           { merge: true },
         );
 
-        setSubjectName('');
-        setTeacherName('');
-        setVideoUrl('');
         setOpenEditModal(false);
       } else {
         alert('please fill all fields');
@@ -78,10 +70,10 @@ function SubjectCard({ item }) {
         <div className="absolute top-0 right-0">
           <div className="flex flex-col justify-center mr-3">
             <IconButton
-              aria-label="download"
+              aria-label="delete"
               color="secondary"
               className="focus:outline-none"
-              onClick={() => deleteSubject(item.id)}
+              onClick={() => setOpenConfirmDeleteModal(true)}
             >
               <DeleteIcon />
             </IconButton>
@@ -175,14 +167,54 @@ function SubjectCard({ item }) {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
+              variant="outlined"
               color="primary"
-              disabled={false}
               className="mt-3"
             >
-              Create Subject
+              update Subject
             </Button>
           </form>
+        </div>
+      </Modal>
+
+      {/* confirm delete  */}
+      <Modal
+        open={openConfirmDeleteModal}
+        onClose={() => setOpenConfirmDeleteModal(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <div className="my-2">
+            <h2 className="text-xl text-gray-600 mb-2">
+              Are you sure you went to delete{' '}
+              <span className="text-indigo-600 font-medium capitalize ">
+                "{item.subject.subjectName}"
+              </span>{' '}
+              subject?
+            </h2>
+            <p className="text-red-500 text-sm">
+              by deleting this, all the lectures that belongs to this subject it
+              be deleted too.
+            </p>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="mr-3">
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => deleteSubject(item.id)}
+              >
+                Delete Subject
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="outlined"
+                onClick={() => setOpenConfirmDeleteModal(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
         </div>
       </Modal>
     </div>
