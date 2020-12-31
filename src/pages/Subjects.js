@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import {
-  Button,
-  IconButton,
-  Modal,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Button, IconButton, Modal, TextField } from '@material-ui/core';
 import firebase from 'firebase';
 import { db } from '../firebase';
 import { LectureContext } from '../LectureConetxt';
@@ -28,7 +22,6 @@ function getModalStyle() {
 function Subjects() {
   const [state] = useContext(LectureContext);
   const [openCreateModal, setOpenCreateModal] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
   const [subjectName, setSubjectName] = useState('');
   const [teacherName, setTeacherName] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
