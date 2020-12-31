@@ -53,7 +53,7 @@ function Subjects() {
         teacherName.length !== 0 &&
         videoUrl.length !== 0
       ) {
-        db.collection('stage4').add({
+        db.collection(`stage${stage[0]}`).add({
           teacherName,
           subjectName,
           videoUrl,
@@ -94,7 +94,7 @@ function Subjects() {
 
       <div className="row">
         <div className="offset-md-5">
-          {loading && <CircularProgress size={100} />}
+          {loading && <CircularProgress size={80} />}
         </div>
       </div>
       <div className="row">

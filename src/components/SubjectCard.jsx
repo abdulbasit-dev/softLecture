@@ -103,12 +103,12 @@ function SubjectCard({ item }) {
               item.id
             }`}
           >
-            <button className="text-gray-300 hover:bg-blue-500 hover:text-white px-2 py-1 text-lg border border-gray-300 rounded-lg mr-4">
+            <button className="text-gray-300 hover:bg-blue-500 hover:text-white px-2 py-1 text-lg border border-gray-300 rounded-lg mr-4 focus:outline-none">
               Lectuers
             </button>
           </Link>
           <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
-            <button className="text-gray-300 px-2 py-1 hover:bg-blue-500 hover:text-white text-lg border border-gray-300 rounded-lg">
+            <button className="text-gray-300 px-2 py-1 hover:bg-blue-500 hover:text-white text-lg border border-gray-300 rounded-lg focus:outline-none ">
               Videos
             </button>
           </a>
