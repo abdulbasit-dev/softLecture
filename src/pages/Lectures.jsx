@@ -10,12 +10,13 @@ import { LectureContext } from '../LectureConetxt';
 import LectureItem from '../components/LectureItem';
 import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 import { useStyles, getModalStyle } from '../assets/styles';
-import { Button, IconButton, Modal } from '@material-ui/core';
+import { Button, IconButton, Modal, TextField } from '@material-ui/core';
 
 function Lectures() {
   const [state] = useContext(LectureContext);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
+  const [order, setOrder] = useState('');
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
   const [lectures, setLectures] = useState(null);
@@ -65,39 +66,43 @@ function Lectures() {
 
   const upload = (e) => {
     e.preventDefault();
+    if (order) {
+      //get a reffrece for where the file should save in firebase
+      const storageRef = storage.ref(`lecture/${file.name}`);
+      storageRef.put(file).on(
+        'state_changed',
+        (snapshot) => {
+          const percentage = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+          );
+          setProgress(percentage);
+        },
+        (err) => {
+          setError(err);
+        },
+        //this function fire when the upload fully complete
+        async () => {
+          const url = await storageRef.getDownloadURL();
+          //this stage come from the email
+          db.collection(`stage${stage[0]}`)
+            .doc(id.split('_')[1])
+            .collection('lectures')
+            .add({
+              url,
+              order,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              name: file.name,
+            });
 
-    //get a reffrece for where the file should save in firebase
-    const storageRef = storage.ref(`lecture/${file.name}`);
-
-    storageRef.put(file).on(
-      'state_changed',
-      (snapshot) => {
-        const percentage = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-        );
-        setProgress(percentage);
-      },
-      (err) => {
-        setError(err);
-      },
-      //this function fire when the upload fully complete
-      async () => {
-        const url = await storageRef.getDownloadURL();
-        //this stage come from the email
-        db.collection(`stage${stage[0]}`)
-          .doc(id.split('_')[1])
-          .collection('lectures')
-          .add({
-            url,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            name: file.name,
-          });
-
-        setProgress(0);
-        setFile(null);
-        setOpen(false);
-      },
-    );
+          setProgress(0);
+          setFile(null);
+          setOrder('');
+          setOpen(false);
+        },
+      );
+    } else {
+      alert('please fill order feild');
+    }
   };
 
   return (
@@ -112,8 +117,12 @@ function Lectures() {
         {lectures ? (
           <>
             <div className="flex items-center">
-              <h1 className="m-3 text-3xl text-blue-600">
-                All {id.split('_')[0]} lectuers{' '}
+              <h1 className="m-3  text-3xl text-gray-600">
+                All{' '}
+                <span className="text-blue-500 font-medium">
+                  "{id.split('_')[0]}"
+                </span>{' '}
+                lectuers{' '}
               </h1>
               {state.user && (
                 <IconButton
@@ -203,7 +212,20 @@ function Lectures() {
           <div className="mt-8">
             <div className="flex">
               <form className="border-separate" onSubmit={upload}>
-                <div className="mb-2">
+                <div className="mb-3">
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    id="lectureOrder"
+                    label="lecture Order"
+                    name="lectureOrder"
+                    type="number"
+                    autoFocus
+                    value={order}
+                    onChange={(e) => setOrder(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
                   <input type="file" onChange={handleChange} />
                   {error && (
                     <div className="text-sm text-red-600 ">{error}</div>

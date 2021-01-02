@@ -33,7 +33,9 @@ function LectureItem({ item, index }) {
   return (
     <tr>
       <td className="px-6 py-0.1 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">{index + 1}</div>
+        <div className="text-sm font-medium text-gray-900">
+          {item.lecture.order}
+        </div>
       </td>
       <td className="px-6 py-0.1 whitespace-nowrap">
         <div className="text-sm font-medium text-gray-900">
