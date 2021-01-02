@@ -11,6 +11,7 @@ import LectureItem from '../components/LectureItem';
 import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 import { useStyles, getModalStyle } from '../assets/styles';
 import { Button, IconButton, Modal, TextField } from '@material-ui/core';
+import BackButton from '../components/BackButton';
 
 function Lectures() {
   const [state] = useContext(LectureContext);
@@ -56,6 +57,7 @@ function Lectures() {
     db.collection(`stage${stage[0]}`)
       .doc(id.split('_')[1])
       .collection('lectures')
+      .orderBy('order')
       .onSnapshot((snapshot) => {
         setLectures(
           snapshot.docs.map((doc) => ({ id: doc.id, lecture: doc.data() })),
@@ -107,6 +109,7 @@ function Lectures() {
 
   return (
     <div className="container">
+      <BackButton />
       <div className="row">
         <div className="offset-md-5">
           {loading && <CircularProgress size={80} />}
@@ -236,7 +239,7 @@ function Lectures() {
                   variant="contained"
                   color="primary"
                   disabled={!file}
-                  className="mt-3"
+                  className="focus:outline-none mt-3"
                 >
                   Create Subject
                 </Button>

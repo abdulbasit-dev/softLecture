@@ -10,6 +10,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useStyles } from '../assets/styles.js';
 import SubjectCard from '../components/SubjectCard';
+import BackButton from '../components/BackButton';
 
 function getModalStyle() {
   return {
@@ -73,6 +74,7 @@ function Subjects() {
 
   return (
     <div className="container">
+      <BackButton />
       <div className="mb-8">
         <div className="flex items-center mb-3">
           <h1 className="text-3xl font-medium text-gray-700 capitalize mr-4 ">

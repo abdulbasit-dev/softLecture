@@ -47,11 +47,11 @@ function Header(props) {
             >
               Logout
             </li>
-          ) : (
-            <li>
-              <NavLink to="/admin/signin">SignIn</NavLink>
-            </li>
-          )}
+          ) : null
+          // <li>
+          //   <NavLink to="/admin/signin">SignIn</NavLink>
+          // </li>
+          }
         </ul>
       </nav>
     </div>

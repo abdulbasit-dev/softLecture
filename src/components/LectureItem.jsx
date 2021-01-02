@@ -18,9 +18,6 @@ function LectureItem({ item, index }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
-  console.log(id.split('_')[1]);
-  console.log(stage);
-
   function deleteLecture(lecId) {
     db.collection(`stage${stage[0]}`)
       .doc(id.split('_')[1])
@@ -92,13 +89,18 @@ function LectureItem({ item, index }) {
               <Button
                 variant="outlined"
                 color="secondary"
+                className="focus:outline-none"
                 onClick={() => deleteLecture(item.id)}
               >
                 Delete lecture
               </Button>
             </div>
             <div>
-              <Button variant="outlined" onClick={() => setOpen(false)}>
+              <Button
+                variant="outlined"
+                className="focus:outline-none"
+                onClick={() => setOpen(false)}
+              >
                 Cancel
               </Button>
             </div>
