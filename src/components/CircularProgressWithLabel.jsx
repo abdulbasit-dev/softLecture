@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 function CircularProgressWithLabel(props) {
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="determinate" {...props} />
+      <CircularProgress variant="determinate" {...props} size={60} />
       <Box
         top={0}
         left={0}

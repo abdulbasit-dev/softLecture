@@ -10,3 +10,11 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
 }));
+
+export function getModalStyle() {
+  return {
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`,
+  };
+}

@@ -9,16 +9,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { LectureContext } from '../LectureConetxt';
 import LectureItem from '../components/LectureItem';
 import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
-import { useStyles } from '../assets/styles';
+import { useStyles, getModalStyle } from '../assets/styles';
 import { Button, IconButton, Modal } from '@material-ui/core';
-
-function getModalStyle() {
-  return {
-    top: `50%`,
-    left: `50%`,
-    transform: `translate(-50%, -50%)`,
-  };
-}
 
 function Lectures() {
   const [state] = useContext(LectureContext);
@@ -26,7 +18,7 @@ function Lectures() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [lectures, setLectures] = useState([]);
+  const [lectures, setLectures] = useState(null);
   const [loading, setLoading] = useState(true);
   const { stage } = useParams();
   const { id } = useParams();
@@ -35,7 +27,7 @@ function Lectures() {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
-  const types = ['pdf', 'ppt', 'pptx', 'text/plain'];
+  const types = ['pdf', 'ppt', 'pptx'];
 
   function handleChange(e) {
     let selected = e.target.files[0];
@@ -44,8 +36,13 @@ function Lectures() {
     //only update the state when we have files selcted
     //check if we have files and valid  types
     if (selected && types.includes(ext)) {
-      setFile(e.target.files[0]);
-      setError(null);
+      if (selected.size <= 20000000) {
+        setFile(e.target.files[0]);
+        setError(null);
+      } else {
+        setFile(null);
+        setError('Pleas select a file with size 20mb or less');
+      }
     } else {
       setFile(null);
       setError('Please select an image file (pdf or ppt)');
@@ -112,7 +109,7 @@ function Lectures() {
       </div>
 
       <div className="flex flex-col shadow-lg">
-        {lectures.lenght !== 0 ? (
+        {lectures ? (
           <>
             <div className="flex items-center">
               <h1 className="m-3 text-3xl text-blue-600">
@@ -165,7 +162,7 @@ function Lectures() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           >
-                            Edit
+                            Delete
                           </th>
                         )}
                       </tr>
@@ -198,31 +195,36 @@ function Lectures() {
               </span>{' '}
               subject?
             </h2>
-            <p className="text-red-500 text-sm">
-              please select the file with size less than 10mb , and type of
-              [pdf,doc,ppt]
+            <p className="text-green-600 text-sm">
+              please select the file with size less than 20mb , and type of
+              (pdf, ppt, pptx)
             </p>
           </div>
           <div className="mt-8">
-            <>
+            <div className="flex">
               <form className="border-separate" onSubmit={upload}>
                 <div className="mb-2">
                   <input type="file" onChange={handleChange} />
                   {error && (
                     <div className="text-sm text-red-600 ">{error}</div>
                   )}
-                  {file && <div className="text-gray-500">{file.name}</div>}
                 </div>
-
-                <button
-                  className="bg-blue-400 hover:bg-blue-500 px-4 py-2 font-semibold text-white rounded-lg mb-6"
+                <Button
                   type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={!file}
+                  className="mt-3"
                 >
-                  Add lecture
-                </button>
+                  Create Subject
+                </Button>
               </form>
-              {progress ? <CircularProgressWithLabel value={progress} /> : null}
-            </>
+              <div className="self-end">
+                {progress ? (
+                  <CircularProgressWithLabel value={progress} />
+                ) : null}
+              </div>
+            </div>
           </div>
         </div>
       </Modal>

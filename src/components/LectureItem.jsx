@@ -1,15 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton, Modal } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { LectureContext } from '../LectureConetxt';
+import { useStyles, getModalStyle } from '../assets/styles';
+import { db } from '../firebase';
+import { useParams } from 'react-router-dom';
 
 function LectureItem({ item, index }) {
   const [state] = useContext(LectureContext);
+  const [open, setOpen] = useState(false);
+  const { stage, id } = useParams();
 
-  function editLecuture() {}
+  // modal
+  const [modalStyle] = React.useState(getModalStyle);
+  const classes = useStyles();
+
+  console.log(id.split('_')[1]);
+  console.log(stage);
+
+  function deleteLecture(lecId) {
+    db.collection(`stage${stage[0]}`)
+      .doc(id.split('_')[1])
+      .collection('lectures')
+      .doc(lecId)
+      .delete()
+      .then(setOpen(false));
+  }
 
   return (
     <tr>
@@ -48,13 +67,42 @@ function LectureItem({ item, index }) {
         <td className="px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex">
           <IconButton
             aria-label="edit"
-            color="primary"
+            color="secondary"
             className="focus:outline-none focus:border-none "
+            onClick={() => setOpen(true)}
           >
-            <EditIcon fontSize="large" />
+            <DeleteIcon fontSize="large" />
           </IconButton>
         </td>
       )}
+
+      <Modal open={open} onClose={() => setOpen(false)}>
+        {/* confirm delete  */}
+
+        <div style={modalStyle} className={classes.paper}>
+          <div className="my-2">
+            <h2 className="text-xl text-gray-600 mb-2">
+              Are you sure you went to delete this lecture?
+            </h2>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="mr-3">
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => deleteLecture(item.id)}
+              >
+                Delete lecture
+              </Button>
+            </div>
+            <div>
+              <Button variant="outlined" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </tr>
   );
 }
