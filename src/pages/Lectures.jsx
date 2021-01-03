@@ -10,7 +10,17 @@ import { LectureContext } from '../LectureConetxt';
 import LectureItem from '../components/LectureItem';
 import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 import { useStyles, getModalStyle } from '../assets/styles';
-import { Button, IconButton, Modal, TextField } from '@material-ui/core';
+import {
+  Button,
+  Radio,
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Modal,
+  RadioGroup,
+  TextField,
+  FormLabel,
+} from '@material-ui/core';
 import BackButton from '../components/BackButton';
 
 function Lectures() {
@@ -20,10 +30,10 @@ function Lectures() {
   const [order, setOrder] = useState('');
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [lectureType, setLectureType] = useState('');
   const [lectures, setLectures] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { stage } = useParams();
-  const { id } = useParams();
+  const { stage, id } = useParams();
 
   // modal
   const [modalStyle] = React.useState(getModalStyle);
@@ -51,8 +61,6 @@ function Lectures() {
     }
   }
 
-  console.log(file);
-
   useEffect(() => {
     db.collection(`stage${stage[0]}`)
       .doc(id.split('_')[1])
@@ -68,7 +76,7 @@ function Lectures() {
 
   const upload = (e) => {
     e.preventDefault();
-    if (order) {
+    if (order && lectureType) {
       //get a reffrece for where the file should save in firebase
       const storageRef = storage.ref(`lecture/${file.name}`);
       storageRef.put(file).on(
@@ -92,6 +100,7 @@ function Lectures() {
             .add({
               url,
               order,
+              type: lectureType,
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               name: file.name,
             });
@@ -103,7 +112,7 @@ function Lectures() {
         },
       );
     } else {
-      alert('please fill order feild');
+      alert('please fill order and lecture type feild');
     }
   };
 
@@ -156,6 +165,12 @@ function Lectures() {
                         >
                           Name
                         </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Type
+                        </th>
 
                         <th
                           scope="col"
@@ -172,9 +187,9 @@ function Lectures() {
                         {state.user && (
                           <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center"
                           >
-                            Delete
+                            Actions
                           </th>
                         )}
                       </tr>
@@ -212,6 +227,7 @@ function Lectures() {
               (pdf, ppt, pptx)
             </p>
           </div>
+
           <div className="mt-8">
             <div className="flex">
               <form className="border-separate" onSubmit={upload}>
@@ -229,6 +245,30 @@ function Lectures() {
                   />
                 </div>
                 <div className="mb-3">
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">
+                      Choose Lecture Type
+                    </FormLabel>
+                    <RadioGroup
+                      aria-label="gender"
+                      name="gender1"
+                      value={lectureType}
+                      onChange={(e) => setLectureType(e.target.value)}
+                    >
+                      <FormControlLabel
+                        value="theory"
+                        control={<Radio />}
+                        label="Theory"
+                      />
+                      <FormControlLabel
+                        value="practic"
+                        control={<Radio />}
+                        label="Practic"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <div className="mb-3">
                   <input type="file" onChange={handleChange} />
                   {error && (
                     <div className="text-sm text-red-600 ">{error}</div>
@@ -241,7 +281,7 @@ function Lectures() {
                   disabled={!file}
                   className="focus:outline-none mt-3"
                 >
-                  Create Subject
+                  Upload Lecture
                 </Button>
               </form>
               <div className="self-end">
