@@ -36,11 +36,7 @@ function SubjectCard({ item }) {
   function editSubject(e) {
     e.preventDefault();
     if (stage[0] === state.user.email.substring(5, 6)) {
-      if (
-        subjectName.length !== 0 &&
-        teacherName.length !== 0 &&
-        videoUrl.length !== 0
-      ) {
+      if (subjectName.length !== 0 && teacherName.length !== 0) {
         db.collection('stage4').doc(item.id).set(
           {
             teacherName,
@@ -108,7 +104,15 @@ function SubjectCard({ item }) {
             </button>
           </Link>
           <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
-            <button className="text-gray-300 px-2 py-1 hover:bg-blue-500 hover:text-white text-lg border border-gray-300 rounded-lg focus:outline-none ">
+            <button
+              className={`text-gray-300 px-2 py-1 ${
+                item.subject.videoUrl &&
+                'hover:bg-blue-500 hover:text-white cursor-pointer'
+              } text-lg border border-gray-300 rounded-lg focus:outline-none ${
+                !item.subject.videoUrl &&
+                'border border-red-500 text-red text-red-600 cursor-default'
+              }`}
+            >
               Videos
             </button>
           </a>
@@ -119,7 +123,10 @@ function SubjectCard({ item }) {
           <div className="my-2">
             <h2 className="text-2xl text-gray-600 ">Edit Subject</h2>
             <small className="text-red-500 text-sm">
-              *Plase fill all fields
+              *Please fill all fields
+            </small>
+            <small className="block capitalize text-sm text-gray-500">
+              if a subject dose not have video yet leave the video field empty
             </small>
           </div>
           <form className={classes.form} noValidate onSubmit={editSubject}>

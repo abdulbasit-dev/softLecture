@@ -49,11 +49,7 @@ function Subjects() {
   function createSubject(e) {
     e.preventDefault();
     if (stage[0] === state.user.email.substring(5, 6)) {
-      if (
-        subjectName.length !== 0 &&
-        teacherName.length !== 0 &&
-        videoUrl.length !== 0
-      ) {
+      if (subjectName.length !== 0 && teacherName.length !== 0) {
         db.collection(`stage${stage[0]}`).add({
           teacherName,
           subjectName,
@@ -109,7 +105,10 @@ function Subjects() {
             <div className="my-2">
               <h2 className="text-2xl text-gray-600 ">Add Subject</h2>
               <small className="text-red-500 text-sm">
-                *Plase fill all fields
+                *Please fill all fields
+              </small>
+              <small className="block capitalize text-sm text-gray-500">
+                if a subject dose not have video yet leave the video field empty
               </small>
             </div>
             <form className={classes.form} noValidate onSubmit={createSubject}>
