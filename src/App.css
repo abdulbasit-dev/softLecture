@@ -23,7 +23,7 @@ body {
   left: 0;
   top: 0;
   z-index: -1;
-  background-image: url(./images/BgSvg.svg);
+  background-image: url('./assets/images/BgSvg.svg');
   background-size: cover;
 }
 

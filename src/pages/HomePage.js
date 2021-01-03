@@ -1,6 +1,6 @@
 import CardComponent from '../components/CardComponent';
 
-import read from '../images/undraw_studying_s3l7 (1).svg';
+import read from '../assets/images/undraw_studying_s3l7 (1).svg';
 
 const datas = [
   { stage: '1st' },

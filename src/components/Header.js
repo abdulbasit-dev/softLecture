@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ACTIONS, LectureContext } from '../LectureConetxt';
-import Logo from '../images/Logo.png';
+import Logo from '../assets/images/Logo.png';
 import './Header.css';
 import { auth } from '../firebase';
 
@@ -40,17 +40,23 @@ function Header(props) {
           </li>
         </ul>
         <ul>
-          {state.user ? (
-            <li
-              className="font-bold uppercase cursor-pointer"
-              onClick={handleLogout}
-            >
-              Logout
-            </li>
-          ) : null
-          // <li>
-          //   <NavLink to="/admin/signin">SignIn</NavLink>
-          // </li>
+          {
+            state.user ? (
+              <div className="flex items-center">
+                <li className="mr-3 hover:text-indigo-500">
+                  {state.user.email}
+                </li>
+                <li
+                  className="font-bold uppercase cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </li>
+              </div>
+            ) : null
+            // <li>
+            //   <NavLink to="/admin/signin">SignIn</NavLink>
+            // </li>
           }
         </ul>
       </nav>

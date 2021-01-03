@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { auth } from './firebase';
 import { ACTIONS, LectureContext } from './LectureConetxt';
-import Error404 from './pages/Error404';
+import Error404 from './pages/Error404/Error404';
 import HomePage from './pages/HomePage';
-import SignIn from './components/Signin';
+import SignIn from './pages/Signin';
 import Header from './components/Header';
 import Subjects from './pages/Subjects';
 import Lectures from './pages/Lectures';
 import './App.css';
+import About from './pages/About';
 
 function App() {
   const [state, dispatch] = useContext(LectureContext);
@@ -37,6 +38,10 @@ function App() {
           <Route path="/" exact>
             <Header />
             <HomePage />
+          </Route>
+          <Route path="/about" exact>
+            <Header />
+            <About />
           </Route>
           <Route path="/admin/signin" exact>
             <SignIn />
