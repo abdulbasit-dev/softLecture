@@ -61,7 +61,7 @@ function SubjectCard({ item }) {
   }
 
   return (
-    <div className="col-lg-3 col-md-4 col-sm-6 mb-8 relative">
+    <div className="col-lg-3 col-md-4 col-md-4 col-sm-6 mb-8 relative">
       {state.user && (
         <div className="absolute top-0 right-0">
           <div className="flex flex-col justify-center mr-3">
@@ -91,7 +91,7 @@ function SubjectCard({ item }) {
           {item.subject?.teacherName}
         </p>
         <div className="flex mt-1 text-gray-300">
-          <span className="mr-4">12 lectures</span>
+          {/* <span className="mr-4">12 lectures</span> */}
         </div>
         <div className="mt-2">
           <Link
