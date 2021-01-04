@@ -127,84 +127,82 @@ function Lectures() {
       </div>
 
       <div className="flex flex-col shadow-lg">
+        <div className="flex items-center">
+          <h1 className="m-3  text-3xl text-gray-600">
+            All{' '}
+            <span className="text-blue-500 font-medium">
+              "{id.split('_')[0]}"
+            </span>{' '}
+            lectuers{' '}
+          </h1>
+          {state.user && (
+            <IconButton
+              aria-label="open modal"
+              color="secondary"
+              className="focus:outline-none"
+              onClick={() => setOpen(true)}
+            >
+              <AddCircleIcon fontSize="large" />
+            </IconButton>
+          )}
+        </div>
         {lectures.length !== 0 ? (
-          <>
-            <div className="flex items-center">
-              <h1 className="m-3  text-3xl text-gray-600">
-                All{' '}
-                <span className="text-blue-500 font-medium">
-                  "{id.split('_')[0]}"
-                </span>{' '}
-                lectuers{' '}
-              </h1>
-              {state.user && (
-                <IconButton
-                  aria-label="open modal"
-                  color="secondary"
-                  className="focus:outline-none"
-                  onClick={() => setOpen(true)}
-                >
-                  <AddCircleIcon fontSize="large" />
-                </IconButton>
-              )}
-            </div>
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          #
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Name
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Type
-                        </th>
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Type
+                      </th>
 
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Download
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        View
+                      </th>
+                      {state.user && (
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center"
                         >
-                          Download
+                          Actions
                         </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          View
-                        </th>
-                        {state.user && (
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center"
-                          >
-                            Actions
-                          </th>
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {lectures.map((item, index) => (
-                        <LectureItem key={item.id} item={item} index={index} />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {lectures.map((item, index) => (
+                      <LectureItem key={item.id} item={item} index={index} />
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
-          </>
+          </div>
         ) : (
           <h1 className="text-3xl text-red-400 text-center p-4">
             Sorry No lectuer Found for {id.split('_')[0]} 😥

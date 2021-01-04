@@ -31,8 +31,6 @@ function SubjectCard({ item }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
-  console.log(item);
-
   function editSubject(e) {
     e.preventDefault();
     if (stage[0] === state.user.email.substring(5, 6)) {
