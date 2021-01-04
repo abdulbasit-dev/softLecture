@@ -31,13 +31,15 @@ function Header(props) {
       <nav className="header__nav flex flex-1 ml-8 items-center justify-between">
         <ul className="flex items-center">
           <li className="mr-3">
-            <NavLink to="/" exact>
+            <NavLink to="/" className="p-1" exact>
               Home
             </NavLink>
           </li>
 
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about" className="p-1">
+              About
+            </NavLink>
           </li>
         </ul>
         <ul>
