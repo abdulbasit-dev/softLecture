@@ -96,8 +96,13 @@ function Subjects() {
         </div>
       </div>
       <div className="row">
-        {subjects &&
-          subjects.map((item) => <SubjectCard key={item.id} item={item} />)}
+        {subjects.length !== 0 ? (
+          subjects.map((item) => <SubjectCard key={item.id} item={item} />)
+        ) : (
+          <h1 className="text-3xl text-red-400 text-center p-4 bg-white shadow-md rounded-lg">
+            Sorry No Subject uploaded yet 😥
+          </h1>
+        )}
 
         {/* CreateModal */}
         <Modal open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
@@ -166,16 +171,6 @@ function Subjects() {
             </form>
           </div>
         </Modal>
-
-        {/* confirm delete */}
-        {/* <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<DeleteIcon />}
-        >
-          Delete
-        </Button> */}
       </div>
     </div>
   );
