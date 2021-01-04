@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import 'alpinejs';
 
 import { ACTIONS, LectureContext } from '../LectureConetxt';
-import Logo from '../assets/images/Logo.png';
+// import Logo from '../assets/images/Logo.png';
 import './Header.css';
 import { auth } from '../firebase';
 
@@ -17,8 +17,8 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center md:px-32 sm:px-0   h-24 mx-auto mb-8 ${
-        props.shadow && 'shadow-md'
+      className={` flex items-center container  h-24  mx-auto mb-8 ${
+        props.shadow ? 'shadow-md' : ''
       }`}
     >
       {/* <img
@@ -28,7 +28,7 @@ function Header(props) {
         style={{ width: '200px' }}
       /> */}
 
-      <nav className="header__nav flex flex-1 mx-3 items-center  justify-between">
+      <nav className="header__nav flex flex-1  items-center  justify-between">
         <ul className="flex items-center">
           <li className="mr-3">
             <NavLink to="/" className="p-1" exact>
@@ -54,8 +54,8 @@ function Header(props) {
               </li>
             </div>
           ) : (
-            <li>
-              <NavLink to="/admin/signin">SignIn</NavLink>
+            <li className="mr-3">
+              <NavLink to="/admin/signin">Sign In</NavLink>
             </li>
           )}
         </ul>
