@@ -43,7 +43,8 @@ function Lectures() {
 
   function handleChange(e) {
     let selected = e.target.files[0];
-    const ext = selected.name.split('.')[1];
+    const extArr = selected.name.split('.');
+    const ext = selected.name.split('.')[extArr.length - 1];
 
     //only update the state when we have files selcted
     //check if we have files and valid  types
@@ -57,7 +58,7 @@ function Lectures() {
       }
     } else {
       setFile(null);
-      setError('Please select an image file (pdf or ppt)');
+      setError('Please select a file file (pdf or ppt or pptx)');
     }
   }
 
@@ -76,7 +77,7 @@ function Lectures() {
 
   const upload = (e) => {
     e.preventDefault();
-    if (order && lectureType) {
+    if (Number.isInteger(order) && lectureType) {
       //get a reffrece for where the file should save in firebase
       const storageRef = storage.ref(`lecture/${file.name}`);
       storageRef.put(file).on(
@@ -108,6 +109,7 @@ function Lectures() {
           setProgress(0);
           setFile(null);
           setOrder('');
+          setLectureType('theory');
 
           setOpen(false);
         },
