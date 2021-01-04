@@ -48,7 +48,7 @@ function LectureItem({ item, index }) {
       .then(() => setOpen(false));
   }
 
-  const types = ['pdf', 'ppt', 'pptx', 'txt'];
+  const types = ['pdf', 'ppt', 'pptx'];
 
   function handleChange(e) {
     let selected = e.target.files[0];
@@ -66,7 +66,7 @@ function LectureItem({ item, index }) {
       }
     } else {
       setFile(null);
-      setError('Please select a file file (pdf, ppt, pptx, txt)');
+      setError('Please select a file file (pdf, ppt, pptx)');
     }
   }
 
@@ -233,7 +233,7 @@ function LectureItem({ item, index }) {
               </span>{' '}
             </h2>
             <p className="text-green-600 text-sm">
-              please select the file with type of (pdf, ppt, pptx, txt)
+              please select the file with type of (pdf, ppt, pptx)
             </p>
           </div>
 

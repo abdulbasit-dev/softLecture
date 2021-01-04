@@ -39,7 +39,7 @@ function Lectures() {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
-  const types = ['pdf', 'ppt', 'pptx', 'txt'];
+  const types = ['pdf', 'ppt', 'pptx'];
 
   function handleChange(e) {
     let selected = e.target.files[0];
@@ -58,7 +58,7 @@ function Lectures() {
       }
     } else {
       setFile(null);
-      setError('Please select a file file (pdf, ppt, pptx, txt)');
+      setError('Please select a file file (pdf, ppt, pptx)');
     }
   }
 
@@ -219,7 +219,7 @@ function Lectures() {
               subject?
             </h2>
             <p className="text-green-600 text-sm">
-              please select the file with type of (pdf, ppt, pptx, txt)
+              please select the file with type of (pdf, ppt, pptx)
             </p>
           </div>
 
