@@ -62,7 +62,7 @@ function LectureItem({ item, index }) {
         setError(null);
       } else {
         setFile(null);
-        setError('Pleas select a file with size 20mb or less');
+        setError('Pleas3 select a file with size 20mb or less');
       }
     } else {
       setFile(null);
@@ -233,8 +233,7 @@ function LectureItem({ item, index }) {
               </span>{' '}
             </h2>
             <p className="text-green-600 text-sm">
-              please select the file with size less than 20mb , and type of
-              (pdf, ppt, pptx)
+              please select the file with type of (pdf, ppt, pptx, txt)
             </p>
           </div>
 

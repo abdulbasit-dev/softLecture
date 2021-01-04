@@ -219,8 +219,7 @@ function Lectures() {
               subject?
             </h2>
             <p className="text-green-600 text-sm">
-              please select the file with size less than 20mb , and type of
-              (pdf, ppt, pptx)
+              please select the file with type of (pdf, ppt, pptx, txt)
             </p>
           </div>
 
