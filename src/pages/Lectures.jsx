@@ -31,7 +31,7 @@ function Lectures() {
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
   const [lectureType, setLectureType] = useState('theory');
-  const [lectures, setLectures] = useState(null);
+  const [lectures, setLectures] = useState([]);
   const [loading, setLoading] = useState(true);
   const { stage, id } = useParams();
 
@@ -127,7 +127,7 @@ function Lectures() {
       </div>
 
       <div className="flex flex-col shadow-lg">
-        {lectures ? (
+        {lectures.length !== 0 ? (
           <>
             <div className="flex items-center">
               <h1 className="m-3  text-3xl text-gray-600">

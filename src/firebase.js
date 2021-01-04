@@ -1,18 +1,17 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: 'AIzaSyDWkafgBI93kR7kPLudsPrG_Y07WHwy8JE',
-  authDomain: 'my-lecture-a07ef.firebaseapp.com',
-  databaseURL: 'https://my-lecture-a07ef.firebaseio.com',
-  projectId: 'my-lecture-a07ef',
-  storageBucket: 'my-lecture-a07ef.appspot.com',
-  messagingSenderId: '832951445616',
-  appId: '1:832951445616:web:78d1d2db10c084da716cb5',
-  measurementId: 'G-PCMVDHKCL6',
-})
+  apiKey: 'AIzaSyDsN42sfvXTz4C2WwN0cTZzPq0iJAug34Q',
+  authDomain: 'softlecure.firebaseapp.com',
+  projectId: 'softlecure',
+  storageBucket: 'softlecure.appspot.com',
+  messagingSenderId: '482012232864',
+  appId: '1:482012232864:web:d2d4c30d4333ec8f785dc5',
+  measurementId: 'G-JCPFL2WP08',
+});
 
-const db = firebaseApp.firestore()
-const auth = firebaseApp.auth()
-const storage = firebaseApp.storage()
+const db = firebaseApp.firestore();
+const auth = firebaseApp.auth();
+const storage = firebaseApp.storage();
 
-export {db, auth, storage}
+export { db, auth, storage };
