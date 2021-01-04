@@ -165,7 +165,7 @@ function LectureItem({ item, index }) {
           </IconButton>
         </a>
       </td>
-      <td className="pr-6 pl-3 py-0.1 whitespace-nowrap text-sm text-gray-500">
+      {/* <td className="pr-6 pl-3 py-0.1 whitespace-nowrap text-sm text-gray-500">
         <a href={item.lecture.url}>
           <IconButton
             aria-label="download"
@@ -175,7 +175,7 @@ function LectureItem({ item, index }) {
             <VisibilityIcon fontSize="large" />
           </IconButton>
         </a>
-      </td>
+      </td> */}
       {state.user && (
         <td className="px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex justify-center ">
           <IconButton
