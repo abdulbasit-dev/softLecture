@@ -30,7 +30,7 @@ function Lectures() {
   const [order, setOrder] = useState('');
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [lectureType, setLectureType] = useState('');
+  const [lectureType, setLectureType] = useState('theory');
   const [lectures, setLectures] = useState(null);
   const [loading, setLoading] = useState(true);
   const { stage, id } = useParams();
@@ -108,6 +108,7 @@ function Lectures() {
           setProgress(0);
           setFile(null);
           setOrder('');
+
           setOpen(false);
         },
       );
