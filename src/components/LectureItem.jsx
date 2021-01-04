@@ -72,7 +72,7 @@ function LectureItem({ item, index }) {
 
   const edit = (e) => {
     e.preventDefault();
-    if (order && lectureType) {
+    if (Number.isInteger(order) && lectureType) {
       //get a reffrece for where the file should save in firebase
       if (file) {
         //delete old one in storage
@@ -111,6 +111,7 @@ function LectureItem({ item, index }) {
 
             setProgress(0);
             setFile(null);
+            setLectureType('theory');
             setOpenEdit(false);
           },
         );
@@ -148,7 +149,11 @@ function LectureItem({ item, index }) {
         </div>
       </td>
       <td className="px-6 py-0.1 whitespace-nowrap">
-        <div className="text-sm font-medium text-indigo-600 capitalize">
+        <div
+          className={`text-sm font-medium ${
+            item.lecture.type === 'theory' && 'text-indigo-600 font-medium '
+          } text-green-500  font-medium capitalize`}
+        >
           {item.lecture.type}
         </div>
       </td>
@@ -246,7 +251,7 @@ function LectureItem({ item, index }) {
                     type="number"
                     autoFocus
                     value={order}
-                    onChange={(e) => setOrder(e.target.value)}
+                    onChange={(e) => setOrder(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="mb-3">
