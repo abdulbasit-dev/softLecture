@@ -43,24 +43,21 @@ function Header(props) {
           </li>
         </ul>
         <ul>
-          {
-            state.user ? (
-              <div className="flex items-center">
-                <li className="mr-3 hover:text-indigo-500">
-                  {state.user.email}
-                </li>
-                <li
-                  className="font-bold uppercase cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </li>
-              </div>
-            ) : null
-            // <li>
-            //   <NavLink to="/admin/signin">SignIn</NavLink>
-            // </li>
-          }
+          {state.user ? (
+            <div className="flex items-center">
+              <li className="mr-3 hover:text-indigo-500">{state.user.email}</li>
+              <li
+                className="font-bold uppercase cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            </div>
+          ) : (
+            <li>
+              <NavLink to="/admin/signin">SignIn</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </div>
