@@ -48,7 +48,7 @@ function LectureItem({ item, index }) {
       .then(() => setOpen(false));
   }
 
-  const types = ['pdf', 'ppt', 'pptx'];
+  const types = ['pdf', 'ppt', 'pptx', 'txt'];
 
   function handleChange(e) {
     let selected = e.target.files[0];
@@ -57,7 +57,7 @@ function LectureItem({ item, index }) {
     //only update the state when we have files selcted
     //check if we have files and valid  types
     if (selected && types.includes(ext)) {
-      if (selected.size <= 20000000) {
+      if (selected.size <= 75000000) {
         setFile(e.target.files[0]);
         setError(null);
       } else {
@@ -66,7 +66,7 @@ function LectureItem({ item, index }) {
       }
     } else {
       setFile(null);
-      setError('Please select an image file (pdf or ppt or pptx)');
+      setError('Please select a file file (pdf, ppt, pptx, txt)');
     }
   }
 

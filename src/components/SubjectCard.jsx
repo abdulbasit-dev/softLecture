@@ -103,6 +103,7 @@ function SubjectCard({ item }) {
           </Link>
           <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
             <button
+              disabled={!item.subject.videoUrl}
               className={`text-gray-300 px-2 py-1 ${
                 item.subject.videoUrl &&
                 'hover:bg-blue-500 hover:text-white cursor-pointer'
