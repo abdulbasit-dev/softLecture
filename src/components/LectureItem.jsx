@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { LectureContext } from '../LectureConetxt';
 import { useStyles, getModalStyle } from '../assets/styles';
@@ -165,17 +164,7 @@ function LectureItem({ item, index }) {
           </IconButton>
         </a>
       </td>
-      {/* <td className="pr-6 pl-3 py-0.1 whitespace-nowrap text-sm text-gray-500">
-        <a href={item.lecture.url}>
-          <IconButton
-            aria-label="download"
-            color="primary"
-            className="focus:outline-none focus:border-none "
-          >
-            <VisibilityIcon fontSize="large" />
-          </IconButton>
-        </a>
-      </td> */}
+
       {state.user && (
         <td className="px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex justify-center ">
           <IconButton
