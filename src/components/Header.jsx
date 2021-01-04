@@ -17,18 +17,18 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center px-32 mx-auto mb-8 ${
+      className={` flex items-center md:px-32 sm:px-0   h-24 mx-auto mb-8 ${
         props.shadow && 'shadow-md'
       }`}
     >
-      <img
+      {/* <img
         src={Logo}
         className="header__logo img-fluid cursor-pointer"
         alt="logo"
         style={{ width: '200px' }}
-      />
+      /> */}
 
-      <nav className="header__nav flex flex-1 ml-8 items-center justify-between">
+      <nav className="header__nav flex flex-1 mx-3 items-center  justify-between">
         <ul className="flex items-center">
           <li className="mr-3">
             <NavLink to="/" className="p-1" exact>
