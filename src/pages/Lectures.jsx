@@ -235,7 +235,7 @@ function Lectures() {
                     type="number"
                     autoFocus
                     value={order}
-                    onChange={(e) => setOrder(e.target.value)}
+                    onChange={(e) => setOrder(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="mb-3">

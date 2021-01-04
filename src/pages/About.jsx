@@ -5,12 +5,12 @@ function About() {
   return (
     <div className="container">
       <h1>About Page</h1>
-      <div className="row mt-4">
+      <div className="row mt-4 justify-center ">
         <h2 className="mb-2 text-lg text-gray-600">
           Developed && Designed By:
         </h2>
-        <div className="mt-2 flex items-center ">
-          <div className="p-4 rounded-lg shadow-md w-2/6 px-8 mr-6">
+        <div className="mt-2 row  sm:justify-between   justify-center">
+          <div className="p-4 rounded-lg shadow-md col-md-5 px-8 ">
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-2xl font-semibold text-indigo-400">
@@ -39,7 +39,7 @@ function About() {
               </div>
             </div>
           </div>
-          <div className="p-4 rounded-lg shadow-md w-2/6 px-8">
+          <div className="p-4 rounded-lg shadow-md col-md-5 px-8">
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-2xl font-semibold text-indigo-400">
