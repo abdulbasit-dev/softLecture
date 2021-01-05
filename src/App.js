@@ -40,7 +40,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/about" exact>
-            <Header />
+            <Header shadow />
             <About />
           </Route>
           <Route path="/admin/signin" exact>

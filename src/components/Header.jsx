@@ -17,49 +17,53 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center container  h-24  mx-auto mb-8 ${
+      className={` flex items-center   h-24  mx-auto mb-8 ${
         props.shadow ? 'shadow-md' : ''
       }`}
     >
-      {/* <img
+      <div className="container">
+        {/* <img
         src={Logo}
         className="header__logo img-fluid cursor-pointer"
         alt="logo"
         style={{ width: '200px' }}
       /> */}
 
-      <nav className="header__nav flex flex-1  items-center  justify-between">
-        <ul className="flex items-center">
-          <li className="mr-3">
-            <NavLink to="/" className="p-1" exact>
-              Home
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/about" className="p-1">
-              About
-            </NavLink>
-          </li>
-        </ul>
-        <ul>
-          {state.user ? (
-            <div className="flex items-center">
-              <li className="mr-3 hover:text-indigo-500">{state.user.email}</li>
-              <li
-                className="font-bold uppercase cursor-pointer"
-                onClick={handleLogout}
-              >
-                Logout
-              </li>
-            </div>
-          ) : (
+        <nav className="header__nav flex flex-1  items-center  justify-between">
+          <ul className="flex items-center">
             <li className="mr-3">
-              <NavLink to="/admin/signin">Sign In</NavLink>
+              <NavLink to="/" className="p-1" exact>
+                Home
+              </NavLink>
             </li>
-          )}
-        </ul>
-      </nav>
+
+            <li>
+              <NavLink to="/about" className="p-1">
+                About
+              </NavLink>
+            </li>
+          </ul>
+          <ul>
+            {state.user ? (
+              <div className="flex items-center">
+                <li className="mr-3 hover:text-indigo-500">
+                  {state.user.email}
+                </li>
+                <li
+                  className="font-bold uppercase cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </li>
+              </div>
+            ) : (
+              <li className="mr-3">
+                <NavLink to="/admin/signin">Sign In</NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
