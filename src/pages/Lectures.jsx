@@ -49,7 +49,7 @@ function Lectures() {
     //only update the state when we have files selcted
     //check if we have files and valid  types
     if (selected && types.includes(ext)) {
-      if (selected.size <= 20000000) {
+      if (selected.size <= 75000000) {
         setFile(e.target.files[0]);
         setError(null);
       } else {
@@ -58,7 +58,7 @@ function Lectures() {
       }
     } else {
       setFile(null);
-      setError('Please select a file file (pdf or ppt or pptx)');
+      setError('Please select a file file (pdf, ppt, pptx)');
     }
   }
 
@@ -219,8 +219,7 @@ function Lectures() {
               subject?
             </h2>
             <p className="text-green-600 text-sm">
-              please select the file with size less than 20mb , and type of
-              (pdf, ppt, pptx)
+              please select the file with type of (pdf, ppt, pptx)
             </p>
           </div>
 
