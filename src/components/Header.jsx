@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import 'alpinejs';
 
 import { ACTIONS, LectureContext } from '../LectureConetxt';
 // import Logo from '../assets/images/Logo.png';
