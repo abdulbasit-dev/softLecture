@@ -19,7 +19,7 @@ function HomePage() {
             <div className="heroSection">
               <h1 className="text-5xl font-semibold ">SoftLectures</h1>
               <h2 className="text-3xl font-medium">
-                Easily download and wacth your online lectures
+                Best place to download & wacth your online lectures
               </h2>
               <img src={read} alt="read" className="img-fluid w-5/6" />
             </div>
