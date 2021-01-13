@@ -43,6 +43,10 @@ function App() {
             <Header shadow />
             <About />
           </Route>
+          <Route path="/feedback" exact>
+            <Header shadow />
+            <About />
+          </Route>
           <Route path="/admin/signin" exact>
             <SignIn />
           </Route>
