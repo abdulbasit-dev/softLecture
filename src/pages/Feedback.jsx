@@ -1,51 +1,95 @@
 import React from "react";
+import emailjs from "emailjs-com";
 
 function Feedback() {
+  function sendEmail(e) {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_6bzwgo6",
+        "template_za0c2qd",
+        e.target,
+        "user_EsXxuYomDwAzvrHvWnB75"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    e.target.reset();
+  }
+
   return (
     <div>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim unde
-      debitis accusantium aliquid sunt corrupti pariatur rerum porro iusto ipsum
-      dolorem praesentium ipsam soluta, rem eaque, laborum nesciunt inventore,
-      provident necessitatibus facere. Natus laudantium nemo harum
-      exercitationem nulla ut quidem expedita quae tenetur labore doloremque,
-      consequuntur molestias repudiandae sapiente nostrum fuga ex tempora sequi
-      dolores architecto delectus sint dignissimos, praesentium fugit.
-      Perferendis blanditiis quidem molestiae sit sapiente eum fugiat
-      voluptatibus, quam perspiciatis quisquam iusto dolorum delectus provident
-      suscipit libero nesciunt repudiandae consequatur beatae, est enim! Error
-      dolorum perferendis odio ad vitae totam voluptatum, cum, neque cumque
-      dolores maiores! Quibusdam nostrum autem nisi nesciunt neque obcaecati
-      modi incidunt repudiandae minus unde porro quis eveniet fugiat iure error
-      nihil minima provident maxime suscipit natus, mollitia hic id. Tempore
-      vitae ducimus natus amet corrupti necessitatibus, perferendis eos quaerat
-      recusandae quasi nihil expedita. Dignissimos error nostrum ducimus magni
-      dolorem deserunt quia ullam illum, maxime enim aliquid, aliquam, laborum
-      possimus recusandae dolor ea quis iusto? In, nemo pariatur. Aut ab ipsa
-      repellat optio expedita, sit, velit accusantium animi consequuntur
-      voluptate deserunt ex? Unde possimus laboriosam nostrum nisi dicta
-      reiciendis quod dolor, mollitia beatae aperiam esse iusto nesciunt iure,
-      vitae eum! Ad laboriosam tenetur enim, velit quod quo praesentium quis
-      nostrum officiis eius maiores ipsam beatae eaque vitae nihil, sequi maxime
-      laudantium modi vel doloremque minus culpa facilis quaerat! Neque quis
-      eligendi possimus, sunt qui et nobis explicabo earum incidunt natus, sit
-      recusandae itaque nisi necessitatibus impedit porro? Eveniet hic odio esse
-      natus laboriosam. Laboriosam laborum incidunt, architecto id ipsa, dicta
-      quaerat expedita laudantium, fugit veniam blanditiis impedit similique
-      aliquam recusandae commodi possimus vitae. Eveniet esse reprehenderit,
-      animi eligendi a, corrupti rem facere ea distinctio natus possimus ipsa
-      unde voluptatum? Vero doloremque, alias illo nulla sint unde voluptatibus
-      dolore maxime qui corporis itaque est assumenda nisi. Incidunt
-      consequuntur vitae facere ipsam animi delectus amet, error similique
-      dignissimos reiciendis harum ab ea vero ipsum rerum aut exercitationem ad
-      laboriosam quasi dolor molestias nesciunt. Corrupti nam nobis quas,
-      obcaecati autem illo unde. Possimus quidem ea sequi esse dicta quasi quas
-      ratione voluptatibus quam consequuntur veniam tempora voluptates delectus
-      numquam, amet ullam et tempore. Quibusdam magni dolore pariatur
-      consequuntur ad quis enim mollitia dignissimos blanditiis suscipit fugiat,
-      nobis quisquam quas sapiente neque ullam eveniet sed, maxime totam
-      perferendis est sequi laboriosam. Eligendi laborum, quaerat saepe impedit
-      ad ratione dignissimos consequatur consectetur. Aut saepe libero quae
-      quidem? Vero, omnis consequatur.
+      <div class="relative flex items-top justify-center min-h-screen bg-white dark:bg-gray-900 sm:items-center sm:pt-0">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+          <div class="mt-8 overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+              <div class="p-6 mr-2 bg-gray-100 dark:bg-gray-800 sm:rounded-lg">
+                <h1 class="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+                  Send A message
+                </h1>
+                <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                  for any issue or adding lecture please tall us to ipvore the
+                  app
+                </p>
+              </div>
+
+              <form
+                class="p-6 flex flex-col justify-center"
+                onSubmit={sendEmail}
+              >
+                <div class="flex flex-col">
+                  <label for="name" class="hidden">
+                    Full Name
+                  </label>
+                  <input
+                    type="name"
+                    name="name"
+                    id="name"
+                    placeholder="Full Name"
+                    class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none"
+                  />
+                </div>
+
+                <div class="flex flex-col mt-2">
+                  <label for="email" class="hidden">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none"
+                  />
+                </div>
+                <div class="flex flex-col mt-2">
+                  <label for="message" class="hidden">
+                    Message
+                  </label>
+                  <textarea
+                    required
+                    name="message"
+                    placeholder="enter your message"
+                    class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none"
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
