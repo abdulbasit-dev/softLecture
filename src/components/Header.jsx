@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
-import { ACTIONS, LectureContext } from '../LectureConetxt';
+import { ACTIONS, LectureContext } from "../LectureConetxt";
 // import Logo from '../assets/images/Logo.png';
-import './Header.css';
-import { auth } from '../firebase';
+import "./Header.css";
+import { auth } from "../firebase";
 
 function Header(props) {
   const [state, dispatch] = useContext(LectureContext);
@@ -16,8 +16,8 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center   h-24  mx-auto mb-8 ${
-        props.shadow ? 'shadow-md' : ''
+      className={` flex items-center   h-20  mx-auto mb-8 ${
+        props.shadow ? "shadow-md" : ""
       }`}
     >
       <div className="container">
