@@ -10,6 +10,7 @@
 
 # production
 /build
+.eslintcache
 
 /src/assets/main.css
 

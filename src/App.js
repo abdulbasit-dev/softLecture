@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useContext, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { auth } from './firebase';
-import { ACTIONS, LectureContext } from './LectureConetxt';
-import Error404 from './pages/Error404/Error404';
-import HomePage from './pages/HomePage';
-import SignIn from './pages/Signin';
-import Header from './components/Header';
-import Subjects from './pages/Subjects';
-import Lectures from './pages/Lectures';
-import './App.css';
-import About from './pages/About';
+import { auth } from "./firebase";
+import { ACTIONS, LectureContext } from "./LectureConetxt";
+import Error404 from "./pages/Error404/Error404";
+import HomePage from "./pages/HomePage";
+import SignIn from "./pages/Signin";
+import Header from "./components/Header";
+import Subjects from "./pages/Subjects";
+import Lectures from "./pages/Lectures";
+import "./App.css";
+import About from "./pages/About";
 
 function App() {
   const [state, dispatch] = useContext(LectureContext);
@@ -46,11 +46,11 @@ function App() {
           <Route path="/admin/signin" exact>
             <SignIn />
           </Route>
-          <Route path="/subjects/:stage/lectures/:id">
+          <Route path="/subjects/:stage/lectures/:id" exact>
             <Header shadow />
             <Lectures />
           </Route>
-          <Route path="/subjects/:stage">
+          <Route path="/subjects/:stage" exact>
             <Header shadow />
             <Subjects />
           </Route>

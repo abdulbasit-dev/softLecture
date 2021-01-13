@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { LectureContext } from '../LectureConetxt';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { LectureContext } from "../LectureConetxt";
+import { Link, useParams } from "react-router-dom";
 
-import { Button, IconButton, Modal, TextField } from '@material-ui/core';
-import firebase from 'firebase';
-import { db } from '../firebase';
+import { Button, IconButton, Modal, TextField } from "@material-ui/core";
+import firebase from "firebase";
+import { db } from "../firebase";
 
-import DeleteIcon from '@material-ui/icons/Delete';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { useStyles } from '../assets/styles.js';
+import DeleteIcon from "@material-ui/icons/Delete";
+import SettingsIcon from "@material-ui/icons/Settings";
+import { useStyles } from "../assets/styles.js";
 
 function getModalStyle() {
   return {
@@ -35,22 +35,22 @@ function SubjectCard({ item }) {
     e.preventDefault();
     if (stage[0] === state.user.email.substring(5, 6)) {
       if (subjectName.length !== 0 && teacherName.length !== 0) {
-        db.collection('stage4').doc(item.id).set(
+        db.collection("stage4").doc(item.id).set(
           {
             teacherName,
             subjectName,
             videoUrl,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           },
-          { merge: true },
+          { merge: true }
         );
 
         setOpenEditModal(false);
       } else {
-        alert('please fill all fields');
+        alert("please fill all fields");
       }
     } else {
-      alert('your are not allowd to edit for this stage');
+      alert("your are not allowd to edit for this stage");
     }
   }
 
@@ -59,7 +59,7 @@ function SubjectCard({ item }) {
   }
 
   return (
-    <div className="col-lg-3 col-md-4 col-md-4 col-sm-6 mb-8 relative">
+    <div className="col-lg-3 col-md-4  col-md-4 col-sm-6 mb-8 relative">
       {state.user && (
         <div className="absolute top-0 right-0">
           <div className="flex flex-col justify-center mr-3">
@@ -81,7 +81,7 @@ function SubjectCard({ item }) {
           </div>
         </div>
       )}
-      <div className="bg-indigo-600   rounded-lg p-6">
+      <div className="cover  rounded-lg p-6">
         <h1 className="text-white font-semibold text-2xl">
           {item.subject?.subjectName}
         </h1>
@@ -92,29 +92,41 @@ function SubjectCard({ item }) {
           {/* <span className="mr-4">12 lectures</span> */}
         </div>
         <div className="mt-2">
-          <Link
-            to={`/subjects/${stage}/lectures/${item.subject.subjectName.trim()}_${
-              item.id
-            }`}
-          >
-            <button className="text-gray-300 hover:bg-blue-500 hover:text-white px-2 py-1 text-lg border border-gray-300 rounded-lg mr-4 focus:outline-none">
-              Lectuers
-            </button>
-          </Link>
-          <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
-            <button
-              disabled={!item.subject.videoUrl}
-              className={`text-gray-300 px-2 py-1 ${
-                item.subject.videoUrl &&
-                'hover:bg-blue-500 hover:text-white cursor-pointer'
-              } text-lg border border-gray-300 rounded-lg focus:outline-none ${
-                !item.subject.videoUrl &&
-                'border border-red-500 text-red text-red-600 cursor-default'
-              }`}
-            >
-              Videos
-            </button>
-          </a>
+          {item.subject?.subjectName.trim().toLowerCase() === "resources" ? (
+            <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
+              <button
+                className={`text-gray-300 px-2 py-1 hover:bg-blue-500 hover:text-white cursor-pointer text-lg border border-gray-300 rounded-lg focus:outline-none`}
+              >
+                Open
+              </button>
+            </a>
+          ) : (
+            <>
+              <Link
+                to={`/subjects/${stage}/lectures/${item.subject.subjectName.trim()}_${
+                  item.id
+                }`}
+              >
+                <button className="text-gray-300 hover:bg-blue-500 hover:text-white px-2 py-1 text-lg border border-gray-300 rounded-lg mr-4 focus:outline-none">
+                  Lectuers
+                </button>
+              </Link>
+              <a href={item.subject.videoUrl} rel="noreferrer" target="_blank">
+                <button
+                  disabled={!item.subject.videoUrl}
+                  className={`text-gray-300 px-2 py-1 ${
+                    item.subject.videoUrl &&
+                    "hover:bg-blue-500 hover:text-white cursor-pointer"
+                  } text-lg border border-gray-300 rounded-lg focus:outline-none ${
+                    !item.subject.videoUrl &&
+                    "border border-gray-900 text-red text-gray-900 cursor-default"
+                  }`}
+                >
+                  Videos
+                </button>
+              </a>
+            </>
+          )}
         </div>
       </div>
       <Modal open={openEditModal} onClose={() => setOpenEditModal(false)}>
@@ -191,10 +203,10 @@ function SubjectCard({ item }) {
         <div style={modalStyle} className={classes.paper}>
           <div className="my-2">
             <h2 className="text-xl text-gray-600 mb-2">
-              Are you sure you went to delete{' '}
+              Are you sure you went to delete{" "}
               <span className="text-indigo-600 font-medium capitalize ">
                 "{item.subject.subjectName}"
-              </span>{' '}
+              </span>{" "}
               subject?
             </h2>
             <p className="text-red-500 text-sm">
