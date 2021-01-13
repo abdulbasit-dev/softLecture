@@ -16,7 +16,7 @@ function Header(props) {
 
   return (
     <div
-      className={` flex items-center   h-24  mx-auto mb-8 ${
+      className={` flex items-center   h-20  mx-auto mb-8 ${
         props.shadow ? "shadow-md" : ""
       }`}
     >
