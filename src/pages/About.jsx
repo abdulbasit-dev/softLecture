@@ -15,10 +15,10 @@ function About() {
               Our Goal!
             </h1>
             <p class="mb-8 text-xl">
-              we went through out this project to help our student for finding
-              thier lectures, in the easiest way. not wasting their time for
-              looking or searching for it, also providing resourse and online
-              video.
+              We went through with this project to help our students find their
+              lectures in the easiest way possible so that they don't waste
+              their time searching for them & also to provide them with
+              resources & online videos.
             </p>
           </div>
           <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
