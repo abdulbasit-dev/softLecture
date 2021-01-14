@@ -11,6 +11,7 @@ import Subjects from "./pages/Subjects";
 import Lectures from "./pages/Lectures";
 import "./App.css";
 import About from "./pages/About";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const [state, dispatch] = useContext(LectureContext);
@@ -42,6 +43,10 @@ function App() {
           <Route path="/about" exact>
             <Header shadow />
             <About />
+          </Route>
+          <Route path="/feedback" exact>
+            <Header shadow />
+            <Feedback />
           </Route>
           <Route path="/admin/signin" exact>
             <SignIn />

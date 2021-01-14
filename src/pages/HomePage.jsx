@@ -17,11 +17,15 @@ function HomePage() {
         <div className="row items-center">
           <div className="col-lg-6 mb-20 lg:mb-0">
             <div className="heroSection">
-              <h1 className="text-5xl font-semibold ">SoftLectures</h1>
+              <h1 className="text-5xl font-semibold ">Soft Lecture</h1>
               <h2 className="text-3xl mt-4 text-gray-600">
                 Best place to download & wacth your online lectures
               </h2>
-              <img src={read} alt="read" className="img-fluid w-5/6" />
+              <img
+                src={read}
+                alt="read"
+                className="img-fluid w-5/6 mx-auto md:mx-1"
+              />
             </div>
           </div>
           <div className="col-lg-6 flex justify-between  flex-wrap ">
