@@ -21,7 +21,11 @@ function HomePage() {
               <h2 className="text-3xl mt-4 text-gray-600">
                 Best place to download & wacth your online lectures
               </h2>
-              <img src={read} alt="read" className="img-fluid w-5/6" />
+              <img
+                src={read}
+                alt="read"
+                className="img-fluid w-5/6 mx-auto md:mx-1"
+              />
             </div>
           </div>
           <div className="col-lg-6 flex justify-between  flex-wrap ">
