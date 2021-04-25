@@ -24,7 +24,6 @@ import {
   Tab,
   Tabs,
   Box,
-  Typography,
 } from '@material-ui/core';
 import BackButton from '../components/BackButton';
 
@@ -244,7 +243,7 @@ function Lectures() {
                         </thead>
                         <tbody className='bg-white divide-y divide-gray-200'>
                           {lectures
-                            .filter(item => item.lecture.sems == 'semster1')
+                            .filter(item => item.lecture.sems === 'semster1')
                             .map((item, index) => (
                               <LectureItem
                                 key={item.id}
@@ -300,7 +299,7 @@ function Lectures() {
                         </thead>
                         <tbody className='bg-white divide-y divide-gray-200'>
                           {lectures
-                            .filter(item => item.lecture.sems == 'semster2')
+                            .filter(item => item.lecture.sems === 'semster2')
                             .map((item, index) => (
                               <LectureItem
                                 key={item.id}
@@ -370,7 +369,7 @@ function Lectures() {
                 </div>
               </div>
             )}
-            {!loading && lectures.length == 0 && (
+            {!loading && lectures.length === 0 && (
               <h1 className='text-3xl text-red-400 text-center p-4'>
                 Sorry No lectuer Found for {id.split('_')[0]} 😥
               </h1>
