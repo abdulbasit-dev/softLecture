@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import firebase from 'firebase';
 
 import {
@@ -15,13 +15,14 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { LectureContext } from '../LectureConetxt';
-import { useStyles, getModalStyle } from '../assets/styles';
-import { db, storage } from '../firebase';
-import { useParams } from 'react-router-dom';
+import {LectureContext} from '../LectureConetxt';
+import {useStyles, getModalStyle} from '../assets/styles';
+import {db, storage} from '../firebase';
+import {useParams} from 'react-router-dom';
 import CircularProgressWithLabel from './CircularProgressWithLabel';
 
-function LectureItem({ item, index }) {
+function LectureItem({item, index, tabValue}) {
+  const [lectureSemster, setLectureSemster] = useState(item.lecture.sems);
   const [state] = useContext(LectureContext);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -30,7 +31,7 @@ function LectureItem({ item, index }) {
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
   const [lectureType, setLectureType] = useState(item.lecture.type);
-  const { stage, id } = useParams();
+  const {stage, id} = useParams();
 
   // modal
   const [modalStyle] = React.useState(getModalStyle);
@@ -70,7 +71,7 @@ function LectureItem({ item, index }) {
     }
   }
 
-  const edit = (e) => {
+  const edit = e => {
     e.preventDefault();
     if (Number.isInteger(order) && lectureType) {
       //get a reffrece for where the file should save in firebase
@@ -81,13 +82,13 @@ function LectureItem({ item, index }) {
         const storageRef = storage.ref(`lecture/${file.name}`);
         storageRef.put(file).on(
           'state_changed',
-          (snapshot) => {
+          snapshot => {
             const percentage = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             setProgress(percentage);
           },
-          (err) => {
+          err => {
             setError(err);
           },
           //this function fire when the upload fully complete
@@ -106,14 +107,16 @@ function LectureItem({ item, index }) {
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   name: file.name,
                 },
-                { merge: true },
+                {
+                  merge: true,
+                }
               );
 
             setProgress(0);
             setFile(null);
             setLectureType('theory');
             setOpenEdit(false);
-          },
+          }
         );
       } else {
         db.collection(`stage${stage[0]}`)
@@ -122,11 +125,12 @@ function LectureItem({ item, index }) {
           .doc(item.id)
           .set(
             {
+              sems: lectureSemster,
               order,
               type: lectureType,
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             },
-            { merge: true },
+            {merge: true}
           );
 
         setOpenEdit(false);
@@ -138,17 +142,17 @@ function LectureItem({ item, index }) {
 
   return (
     <tr>
-      <td className="px-6 py-0.1 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">
+      <td className='px-6 py-0.1 whitespace-nowrap'>
+        <div className='text-sm font-medium text-gray-900'>
           {item.lecture.order}
         </div>
       </td>
-      <td className="px-6 py-0.1 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">
+      <td className='px-6 py-0.1 whitespace-nowrap'>
+        <div className='text-sm font-medium text-gray-900'>
           {item.lecture.name}
         </div>
       </td>
-      <td className="px-6 py-0.1 whitespace-nowrap">
+      <td className='px-6 py-0.1 whitespace-nowrap'>
         <div
           className={`text-sm font-medium ${
             item.lecture.type === 'theory' && 'text-indigo-600 font-medium '
@@ -158,35 +162,35 @@ function LectureItem({ item, index }) {
         </div>
       </td>
 
-      <td className="px-6 py-0.1 whitespace-nowrap text-sm text-gray-500">
+      <td className='px-6 py-0.1 whitespace-nowrap text-sm text-gray-500'>
         <a href={item.lecture.url}>
           <IconButton
-            aria-label="download"
-            color="primary"
-            className="focus:outline-none focus:border-none "
+            aria-label='download'
+            color='primary'
+            className='focus:outline-none focus:border-none '
           >
-            <GetAppIcon fontSize="large" />
+            <GetAppIcon fontSize='large' />
           </IconButton>
         </a>
       </td>
 
       {state.user && (
-        <td className="px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex justify-center ">
+        <td className='px-6 pl-3 py-0.1 whitespace-nowrap text-right text-sm font-medium flex justify-center '>
           <IconButton
-            aria-label="edit"
-            color="primary"
-            className="focus:outline-none focus:border-none "
+            aria-label='edit'
+            color='primary'
+            className='focus:outline-none focus:border-none '
             onClick={() => setOpenEdit(true)}
           >
-            <SettingsIcon fontSize="large" />
+            <SettingsIcon fontSize='large' />
           </IconButton>
           <IconButton
-            aria-label="edit"
-            color="secondary"
-            className="focus:outline-none focus:border-none "
+            aria-label='edit'
+            color='secondary'
+            className='focus:outline-none focus:border-none '
             onClick={() => setOpen(true)}
           >
-            <DeleteIcon fontSize="large" />
+            <DeleteIcon fontSize='large' />
           </IconButton>
         </td>
       )}
@@ -194,17 +198,17 @@ function LectureItem({ item, index }) {
       {/* confirm delete  */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <div className="my-2">
-            <h2 className="text-xl text-gray-600 mb-2">
+          <div className='my-2'>
+            <h2 className='text-xl text-gray-600 mb-2'>
               Are you sure you went to delete this lecture?
             </h2>
           </div>
-          <div className="flex justify-end mt-6">
-            <div className="mr-3">
+          <div className='flex justify-end mt-6'>
+            <div className='mr-3'>
               <Button
-                variant="outlined"
-                color="secondary"
-                className="focus:outline-none"
+                variant='outlined'
+                color='secondary'
+                className='focus:outline-none'
                 onClick={() => deleteLecture(item.id)}
               >
                 Delete lecture
@@ -212,8 +216,8 @@ function LectureItem({ item, index }) {
             </div>
             <div>
               <Button
-                variant="outlined"
-                className="focus:outline-none"
+                variant='outlined'
+                className='focus:outline-none'
                 onClick={() => setOpen(false)}
               >
                 Cancel
@@ -225,74 +229,94 @@ function LectureItem({ item, index }) {
       {/* confirm delete  */}
       <Modal open={openEdit} onClose={() => setOpenEdit(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <div className="my-2">
-            <h2 className="text-xl text-gray-600 mb-2">
+          <div className='my-2'>
+            <h2 className='text-xl text-gray-600 mb-2'>
               Edit{' '}
-              <span className="text-indigo-600 font-medium ">
+              <span className='text-indigo-600 font-medium '>
                 "{item.lecture.name}"
               </span>{' '}
             </h2>
-            <p className="text-green-600 text-sm">
+            <p className='text-green-600 text-sm'>
               please select the file with type of (pdf, ppt, pptx)
             </p>
           </div>
 
-          <div className="mt-8">
-            <div className="flex">
-              <form className="border-separate" onSubmit={edit}>
-                <div className="mb-3">
+          <div className='mt-8'>
+            <div className='flex'>
+              <form className='border-separate' onSubmit={edit}>
+                <div className='mb-3'>
                   <TextField
-                    variant="outlined"
-                    margin="normal"
-                    id="lectureOrder"
-                    label="lecture Order"
-                    name="lectureOrder"
-                    type="number"
+                    variant='outlined'
+                    margin='normal'
+                    id='lectureOrder'
+                    label='lecture Order'
+                    name='lectureOrder'
+                    type='number'
                     autoFocus
                     value={order}
-                    onChange={(e) => setOrder(parseInt(e.target.value))}
+                    onChange={e => setOrder(parseInt(e.target.value))}
                   />
                 </div>
-                <div className="mb-3">
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">
+                <div className='mb-3'>
+                  <FormControl component='fieldset'>
+                    <FormLabel component='legend'>
                       Choose Lecture Type
                     </FormLabel>
                     <RadioGroup
-                      aria-label="gender"
-                      name="gender1"
+                      aria-label='gender'
+                      name='gender1'
                       value={lectureType}
-                      onChange={(e) => setLectureType(e.target.value)}
+                      onChange={e => setLectureType(e.target.value)}
                     >
                       <FormControlLabel
-                        value="theory"
+                        value='theory'
                         control={<Radio />}
-                        label="Theory"
+                        label='Theory'
                       />
                       <FormControlLabel
-                        value="practic"
+                        value='practic'
                         control={<Radio />}
-                        label="Practic"
+                        label='Practic'
                       />
                     </RadioGroup>
                   </FormControl>
                 </div>
-                <div className="mb-3">
-                  <input type="file" onChange={handleChange} />
+                <div className='mb-3'>
+                  <FormControl component='fieldset'>
+                    <FormLabel component='legend'>Choose Semster</FormLabel>
+                    <RadioGroup
+                      value={lectureSemster}
+                      onChange={e => setLectureSemster(e.target.value)}
+                    >
+                      <FormControlLabel
+                        value='semster1'
+                        control={<Radio />}
+                        label='Semester 1'
+                      />
+                      <FormControlLabel
+                        value='semster2'
+                        control={<Radio />}
+                        label='Semester 2'
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <div className='mb-3'>
+                  <input type='file' onChange={handleChange} />
                   {error && (
-                    <div className="text-sm text-red-600 ">{error}</div>
+                    <div className='text-sm text-red-600 '>{error}</div>
                   )}
                 </div>
                 <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className="focus:outline-none mt-3"
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  className='focus:outline-none mt-3'
                 >
                   Edit Lecture
                 </Button>
               </form>
-              <div className="self-end">
+              <div className='self-end'>
                 {progress ? (
                   <CircularProgressWithLabel value={progress} />
                 ) : null}
