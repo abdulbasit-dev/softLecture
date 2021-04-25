@@ -44,17 +44,22 @@ function About() {
                 while using SoftLecture mobile app, it will be so easy to access
                 the lectures and navigate throughout the application
               </p>
-              <div className=''>
-                <div>
-                  <a
-                    rel='noreferrer'
-                    target='_blank'
-                    class='underline text-blue-600 hover:text-blue-800 visited:text-purple-600 text-center'
-                    href='https://gonative.io/share/rmkzjy'
-                  >
-                    Download Link
-                  </a>
-                </div>
+              <div className='flex align-items-center'>
+                <p className='text-xl mr-3 text-indigo-600'>
+                  Click the Icon to download app
+                </p>
+                <a
+                  rel='noreferrer'
+                  target='_blank'
+                  className='transition duration-500 ease-in-out  transform hover:-translate-y-1 hover:scale-110'
+                  href='https://gonative.io/share/rmkzjy'
+                >
+                  <img
+                    src='icons8-download-100.png'
+                    className='object-cover object-center rounded'
+                    alt='download app'
+                  />
+                </a>
               </div>
             </div>
             <div class='lg:max-w-lg lg:w-full md:w-1/2 w-5/6'>
