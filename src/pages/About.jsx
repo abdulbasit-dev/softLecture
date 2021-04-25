@@ -46,7 +46,6 @@ function About() {
               </p>
               <div className=''>
                 <div>
-                  <h3 className='sm:text-xl text-md mb-1 text-gray-500'></h3>
                   <a
                     rel='noreferrer'
                     target='_blank'
