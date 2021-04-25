@@ -18,7 +18,7 @@ body {
   margin: 0 auto;
 }
 .containe::after {
-  content: "";
+  content: '';
   overflow: hidden;
   background-repeat: no-repeat;
   position: absolute;
@@ -27,7 +27,7 @@ body {
   left: 0;
   top: 0;
   z-index: -1;
-  background-image: url("./assets/images/BgSvg.svg");
+  background-image: url('./assets/images/BgSvg.svg');
   background-size: cover;
 }
 
@@ -35,6 +35,15 @@ body {
   max-width: 100%;
   height: auto;
 }
+
+/* #footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+} */
 
 /* // Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

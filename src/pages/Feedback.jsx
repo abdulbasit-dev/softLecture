@@ -3,6 +3,7 @@ import emailjs from 'emailjs-com';
 
 import send from '../assets/images/bermuda-sending-e-mail.svg';
 import {Button, TextField} from '@material-ui/core';
+import Footer from '../components/Footer';
 
 function Feedback() {
   const [error, setError] = useState(false);
@@ -33,7 +34,7 @@ function Feedback() {
 
   return (
     <div>
-      <div className='flex items-top justify-center sm:items-center sm:pt-0'>
+      <div className='flex items-top justify-center sm:items-center sm:pt-0 mb-16'>
         <div className='max-w-6xl mx-auto sm:px-6 lg:px-8'>
           <div className='mt-8 overflow-hidden'>
             <div className='grid grid-cols-1 md:grid-cols-2  items-center'>
@@ -100,6 +101,7 @@ function Feedback() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -26,6 +26,7 @@ import {
   Box,
 } from '@material-ui/core';
 import BackButton from '../components/BackButton';
+import Footer from '../components/Footer';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -158,328 +159,336 @@ function Lectures() {
   };
 
   return (
-    <div className='container'>
-      {loading ? (
-        <div className='d-flex'>
-          <div className=''>{loading && <CircularProgress size={80} />}</div>
-        </div>
-      ) : (
-        <div>
-          <BackButton />
-          <div className='flex flex-col shadow-lg'>
-            <div className='flex items-center'>
-              <h1 className='m-3  text-3xl text-gray-600'>
-                All{' '}
-                <span className='text-blue-500 font-medium'>
-                  "{id.split('_')[0]}"
-                </span>{' '}
-                lectuers{' '}
-              </h1>
-              {state.user && (
-                <IconButton
-                  aria-label='open modal'
-                  color='secondary'
-                  className='focus:outline-none'
-                  onClick={() => setOpen(true)}
-                >
-                  <AddCircleIcon fontSize='large' />
-                </IconButton>
-              )}
-            </div>
-            {lectures.length !== 0 && (
-              <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-                <div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
-                  <AppBar position='static'>
-                    <Tabs
-                      value={tabValue}
-                      onChange={handleTabChange}
-                      aria-label='simple tabs example'
-                    >
-                      <Tab label='Semster 1' {...a11yProps(0)} />
-                      <Tab label='Semster 2' {...a11yProps(1)} />
-                      <Tab label='All Lecture' {...a11yProps(2)} />
-                    </Tabs>
-                  </AppBar>
-                  <TabPanel value={tabValue} index={0}>
-                    <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
-                      <table className='min-w-full divide-y divide-gray-200'>
-                        <thead className='bg-gray-50'>
-                          <tr>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              #
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Name
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Type
-                            </th>
-
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Download
-                            </th>
-
-                            {state.user && (
-                              <th
-                                scope='col'
-                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
-                              >
-                                Actions
-                              </th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody className='bg-white divide-y divide-gray-200'>
-                          {lectures
-                            .filter(item => item.lecture.sems === 'semster1')
-                            .map((item, index) => (
-                              <LectureItem
-                                key={item.id}
-                                tabValue={tabValue}
-                                item={item}
-                                index={index}
-                              />
-                            ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </TabPanel>
-                  <TabPanel value={tabValue} index={1}>
-                    <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
-                      <table className='min-w-full divide-y divide-gray-200'>
-                        <thead className='bg-gray-50'>
-                          <tr>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              #
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Name
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Type
-                            </th>
-
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Download
-                            </th>
-
-                            {state.user && (
-                              <th
-                                scope='col'
-                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
-                              >
-                                Actions
-                              </th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody className='bg-white divide-y divide-gray-200'>
-                          {lectures
-                            .filter(item => item.lecture.sems === 'semster2')
-                            .map((item, index) => (
-                              <LectureItem
-                                key={item.id}
-                                tabValue={tabValue}
-                                item={item}
-                                index={index}
-                              />
-                            ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </TabPanel>
-                  <TabPanel value={tabValue} index={2}>
-                    <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
-                      <table className='min-w-full divide-y divide-gray-200'>
-                        <thead className='bg-gray-50'>
-                          <tr>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              #
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Name
-                            </th>
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Type
-                            </th>
-
-                            <th
-                              scope='col'
-                              className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                            >
-                              Download
-                            </th>
-
-                            {state.user && (
-                              <th
-                                scope='col'
-                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
-                              >
-                                Actions
-                              </th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody className='bg-white divide-y divide-gray-200'>
-                          {lectures.map((item, index) => (
-                            <LectureItem
-                              key={item.id}
-                              tabValue={tabValue}
-                              item={item}
-                              index={index}
-                            />
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </TabPanel>
-                </div>
-              </div>
-            )}
-            {!loading && lectures.length === 0 && (
-              <h1 className='text-3xl text-red-400 text-center p-4'>
-                Sorry No lectuer Found for {id.split('_')[0]} 😥
-              </h1>
-            )}
+    <React.Fragment>
+      <div className='container mb-16 '>
+        {loading ? (
+          <div
+            className='d-flex justify-center items-center'
+            style={{height: '50vh'}}
+          >
+            <div className=''>{loading && <CircularProgress size={80} />}</div>
           </div>
-
-          {/* upload model */}
-          <Modal open={open} onClose={() => setOpen(false)}>
-            <div style={modalStyle} className={classes.paper}>
-              <div className='my-2'>
-                <h2 className='text-xl text-gray-600 mb-2'>
-                  Adding Lecture for {''}
-                  <span className='text-indigo-600 font-medium capitalize '>
+        ) : (
+          <div>
+            <BackButton />
+            <div className='flex flex-col shadow'>
+              <div className='flex items-center'>
+                <h1 className='m-3  text-3xl text-gray-600'>
+                  All{' '}
+                  <span className='text-blue-500 font-medium'>
                     "{id.split('_')[0]}"
                   </span>{' '}
-                  subject?
-                </h2>
-                <p className='text-green-600 text-sm'>
-                  please select the file with type of (pdf, ppt, pptx)
-                </p>
+                  lectuers{' '}
+                </h1>
+                {state.user && (
+                  <IconButton
+                    aria-label='open modal'
+                    color='secondary'
+                    className='focus:outline-none'
+                    onClick={() => setOpen(true)}
+                  >
+                    <AddCircleIcon fontSize='large' />
+                  </IconButton>
+                )}
               </div>
+              {lectures.length !== 0 && (
+                <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+                  <div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+                    <AppBar position='static'>
+                      <Tabs
+                        value={tabValue}
+                        onChange={handleTabChange}
+                        aria-label='simple tabs example'
+                      >
+                        <Tab label='Semster 1' {...a11yProps(0)} />
+                        <Tab label='Semster 2' {...a11yProps(1)} />
+                        <Tab label='All Lecture' {...a11yProps(2)} />
+                      </Tabs>
+                    </AppBar>
+                    <TabPanel value={tabValue} index={0}>
+                      <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+                        <table className='min-w-full divide-y divide-gray-200'>
+                          <thead className='bg-gray-50'>
+                            <tr>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                #
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Name
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Type
+                              </th>
 
-              <div className='mt-8'>
-                <div className='flex'>
-                  <form className='border-separate' onSubmit={upload}>
-                    <div className='mb-3'>
-                      <TextField
-                        variant='outlined'
-                        margin='normal'
-                        id='lectureOrder'
-                        label='lecture Order'
-                        name='lectureOrder'
-                        type='number'
-                        autoFocus
-                        value={order}
-                        onChange={e => setOrder(parseInt(e.target.value))}
-                      />
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Download
+                              </th>
+
+                              {state.user && (
+                                <th
+                                  scope='col'
+                                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
+                                >
+                                  Actions
+                                </th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody className='bg-white divide-y divide-gray-200'>
+                            {lectures
+                              .filter(item => item.lecture.sems === 'semster1')
+                              .map((item, index) => (
+                                <LectureItem
+                                  key={item.id}
+                                  tabValue={tabValue}
+                                  item={item}
+                                  index={index}
+                                />
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={1}>
+                      <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+                        <table className='min-w-full divide-y divide-gray-200'>
+                          <thead className='bg-gray-50'>
+                            <tr>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                #
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Name
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Type
+                              </th>
+
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Download
+                              </th>
+
+                              {state.user && (
+                                <th
+                                  scope='col'
+                                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
+                                >
+                                  Actions
+                                </th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody className='bg-white divide-y divide-gray-200'>
+                            {lectures
+                              .filter(item => item.lecture.sems === 'semster2')
+                              .map((item, index) => (
+                                <LectureItem
+                                  key={item.id}
+                                  tabValue={tabValue}
+                                  item={item}
+                                  index={index}
+                                />
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
+                      <div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+                        <table className='min-w-full divide-y divide-gray-200'>
+                          <thead className='bg-gray-50'>
+                            <tr>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                #
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Name
+                              </th>
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Type
+                              </th>
+
+                              <th
+                                scope='col'
+                                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                              >
+                                Download
+                              </th>
+
+                              {state.user && (
+                                <th
+                                  scope='col'
+                                  className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex justify-center'
+                                >
+                                  Actions
+                                </th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody className='bg-white divide-y divide-gray-200'>
+                            {lectures.map((item, index) => (
+                              <LectureItem
+                                key={item.id}
+                                tabValue={tabValue}
+                                item={item}
+                                index={index}
+                              />
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </TabPanel>
+                  </div>
+                </div>
+              )}
+              {!loading && lectures.length === 0 && (
+                <h1 className='text-3xl text-red-400 text-center p-4'>
+                  Sorry No lectuer Found for {id.split('_')[0]} 😥
+                </h1>
+              )}
+            </div>
+
+            {/* upload model */}
+            <Modal open={open} onClose={() => setOpen(false)}>
+              <div style={modalStyle} className={classes.paper}>
+                <div className='my-2'>
+                  <h2 className='text-xl text-gray-600 mb-2'>
+                    Adding Lecture for {''}
+                    <span className='text-indigo-600 font-medium capitalize '>
+                      "{id.split('_')[0]}"
+                    </span>{' '}
+                    subject?
+                  </h2>
+                  <p className='text-green-600 text-sm'>
+                    please select the file with type of (pdf, ppt, pptx)
+                  </p>
+                </div>
+
+                <div className='mt-8'>
+                  <div className='flex'>
+                    <form className='border-separate' onSubmit={upload}>
+                      <div className='mb-3'>
+                        <TextField
+                          variant='outlined'
+                          margin='normal'
+                          id='lectureOrder'
+                          label='lecture Order'
+                          name='lectureOrder'
+                          type='number'
+                          autoFocus
+                          value={order}
+                          onChange={e => setOrder(parseInt(e.target.value))}
+                        />
+                      </div>
+                      <div className='mb-3'>
+                        <FormControl component='fieldset'>
+                          <FormLabel component='legend'>
+                            Choose Lecture Type
+                          </FormLabel>
+                          <RadioGroup
+                            aria-label='gender'
+                            name='gender1'
+                            value={lectureType}
+                            onChange={e => setLectureType(e.target.value)}
+                          >
+                            <FormControlLabel
+                              value='theory'
+                              control={<Radio />}
+                              label='Theory'
+                            />
+                            <FormControlLabel
+                              value='practic'
+                              control={<Radio />}
+                              label='Practic'
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                      <div className='mb-3'>
+                        <FormControl component='fieldset'>
+                          <FormLabel component='legend'>
+                            Choose Semster
+                          </FormLabel>
+                          <RadioGroup
+                            value={lectureSemster}
+                            onChange={e => setLectureSemster(e.target.value)}
+                          >
+                            <FormControlLabel
+                              value='semster1'
+                              control={<Radio />}
+                              label='Semester 1'
+                            />
+                            <FormControlLabel
+                              value='semster2'
+                              control={<Radio />}
+                              label='Semester 2'
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                      <div className='mb-3'>
+                        <input type='file' onChange={handleChange} />
+                        {error && (
+                          <div className='text-sm text-red-600 '>{error}</div>
+                        )}
+                      </div>
+                      <Button
+                        type='submit'
+                        variant='contained'
+                        color='primary'
+                        disabled={!file}
+                        className='focus:outline-none mt-3'
+                      >
+                        Upload Lecture
+                      </Button>
+                    </form>
+                    <div className='self-end'>
+                      {progress ? (
+                        <CircularProgressWithLabel value={progress} />
+                      ) : null}
                     </div>
-                    <div className='mb-3'>
-                      <FormControl component='fieldset'>
-                        <FormLabel component='legend'>
-                          Choose Lecture Type
-                        </FormLabel>
-                        <RadioGroup
-                          aria-label='gender'
-                          name='gender1'
-                          value={lectureType}
-                          onChange={e => setLectureType(e.target.value)}
-                        >
-                          <FormControlLabel
-                            value='theory'
-                            control={<Radio />}
-                            label='Theory'
-                          />
-                          <FormControlLabel
-                            value='practic'
-                            control={<Radio />}
-                            label='Practic'
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </div>
-                    <div className='mb-3'>
-                      <FormControl component='fieldset'>
-                        <FormLabel component='legend'>Choose Semster</FormLabel>
-                        <RadioGroup
-                          value={lectureSemster}
-                          onChange={e => setLectureSemster(e.target.value)}
-                        >
-                          <FormControlLabel
-                            value='semster1'
-                            control={<Radio />}
-                            label='Semester 1'
-                          />
-                          <FormControlLabel
-                            value='semster2'
-                            control={<Radio />}
-                            label='Semester 2'
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </div>
-                    <div className='mb-3'>
-                      <input type='file' onChange={handleChange} />
-                      {error && (
-                        <div className='text-sm text-red-600 '>{error}</div>
-                      )}
-                    </div>
-                    <Button
-                      type='submit'
-                      variant='contained'
-                      color='primary'
-                      disabled={!file}
-                      className='focus:outline-none mt-3'
-                    >
-                      Upload Lecture
-                    </Button>
-                  </form>
-                  <div className='self-end'>
-                    {progress ? (
-                      <CircularProgressWithLabel value={progress} />
-                    ) : null}
                   </div>
                 </div>
               </div>
-            </div>
-          </Modal>
-        </div>
-      )}
-    </div>
+            </Modal>
+          </div>
+        )}
+      </div>
+      {!loading && <Footer />}
+    </React.Fragment>
   );
 }
 
