@@ -53,7 +53,7 @@ function About() {
                     alt='QR-code of download app link'
                     title='QR-code of download app link'
                     class='mx-auto'
-                    src='//chart.apis.google.com/chart?cht=qr&amp;chs=200x200&amp;chld=L|0&amp;chl=https%3A%2F%2Fappsgeyser.com%2Fapi%2Ftrack%2Fredirect%3Furl%3Dhttps%253A%252F%252Ffiles.appsgeyser.com%252FSoft%252520Lecture_13614586.apk%253Fsrc%253Dpage'
+                    src='//chart.apis.google.com/chart?cht=qr&chs=200x200&chld=L|0&chl=https%3A%2F%2Fappsgeyser.com%2Fapi%2Ftrack%2Fredirect%3Furl%3Dhttps%253A%252F%252Ffiles.appsgeyser.com%252FSoft%252520Lecture_13622412.apk%253Fsrc%253Dpage'
                   ></img>
                 </div>
                 <div>
@@ -64,9 +64,9 @@ function About() {
                     rel='noreferrer'
                     target='_blank'
                     class='underline text-blue-600 hover:text-blue-800 visited:text-purple-600 text-center'
-                    href='http://app.appsgeyser.com/13614586/Soft%20Lecture'
+                    href='http://app.appsgeyser.com/13622412/Soft%20Lecture'
                   >
-                    http://app.appsgeyser.com/13614586/Soft%20Lecture
+                    http://app.appsgeyser.com/13622412/Soft%20Lecture
                   </a>
                 </div>
               </div>
