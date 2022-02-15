@@ -44,31 +44,22 @@ function About() {
                 while using SoftLecture mobile app, it will be so easy to access
                 the lectures and navigate throughout the application
               </p>
-              <div className='mx-auto'>
-                <div>
-                  <h3 className='sm:text-xl text-md text-gray-500'>
-                    Scan QR-code with your phone camera
-                  </h3>
+              <div className='flex align-items-center'>
+                <p className='text-xl mr-3 text-indigo-600'>
+                  Click the Icon to download app
+                </p>
+                <a
+                  rel='noreferrer'
+                  target='_blank'
+                  className='transition duration-500 ease-in-out  transform hover:-translate-y-1 hover:scale-110'
+                  href='https://gonative.io/share/nkedkb'
+                >
                   <img
-                    alt='QR-code of download app link'
-                    title='QR-code of download app link'
-                    class='mx-auto'
-                    src='//chart.apis.google.com/chart?cht=qr&amp;chs=200x200&amp;chld=L|0&amp;chl=https%3A%2F%2Fappsgeyser.com%2Fapi%2Ftrack%2Fredirect%3Furl%3Dhttps%253A%252F%252Ffiles.appsgeyser.com%252FSoft%252520Lecture_13614586.apk%253Fsrc%253Dpage'
-                  ></img>
-                </div>
-                <div>
-                  <h3 className='sm:text-xl text-md mb-1 text-gray-500'>
-                    Or use This link to download the apk
-                  </h3>
-                  <a
-                    rel='noreferrer'
-                    target='_blank'
-                    class='underline text-blue-600 hover:text-blue-800 visited:text-purple-600 text-center'
-                    href='http://app.appsgeyser.com/13614586/Soft%20Lecture'
-                  >
-                    http://app.appsgeyser.com/13614586/Soft%20Lecture
-                  </a>
-                </div>
+                    src='icons8-download-100.png'
+                    className='object-cover object-center rounded'
+                    alt='download app'
+                  />
+                </a>
               </div>
             </div>
             <div class='lg:max-w-lg lg:w-full md:w-1/2 w-5/6'>
